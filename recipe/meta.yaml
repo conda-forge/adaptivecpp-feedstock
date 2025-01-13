@@ -19,6 +19,8 @@ build:
     - libboost
     - llvm
     - llvm-openmp  # [not win]
+  missing_dso_whitelist:
+    - $RPATH/libcuda.so.1
   skip: true  # [osx]
   skip: true  # [cuda_compiler_version == "11.8"]
   string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
@@ -42,8 +44,7 @@ requirements:
     - llvm-openmp >=14,<19
     {% if cuda_compiler_version != "None" %}
     - cuda-version {{ cuda_compiler_version }}
-    - cuda-driver-dev
-    - cuda-cudart-dev
+    - cuda-cudart-dev  # [linux]
     {% endif %}
   run:
     - llvm >=14,<19
