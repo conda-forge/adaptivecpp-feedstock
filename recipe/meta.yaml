@@ -54,11 +54,21 @@ test:
     - test -f $PREFIX/include/AdaptiveCpp/sycl/sycl.hpp  # [not win]
     - test -f $PREFIX/lib/cmake/AdaptiveCpp/adaptivecpp-config.cmake  # [not win]
     - test -f $PREFIX/lib/libacpp-common${SHLIB_EXT}  # [not win]
+    - test -f $PREFIX/lib/hipSYCL/librt-backend-omp${SHLIB_EXT}  # [not win]
+    {% if cuda_compiler_version != "None" %}
+    - test -f $PREFIX/lib/hipSYCL/librt-backend-cuda${SHLIB_EXT}  # [not win]
+    {% endif %}
     - acpp-info  # [not win]
     - if not exist %PREFIX%\\Library\\include\\AdaptiveCpp\\SYCL\\sycl.hpp exit 1  # [win]
     - if not exist %PREFIX%\\Library\\lib\\cmake\\AdaptiveCpp\\adaptivecpp-config.cmake exit 1  # [win]
     - if not exist %PREFIX%\\Library\\lib\\acpp-common.lib exit 1  # [win]
     - if not exist %PREFIX%\\Library\\bin\\acpp-common.dll exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\hipSYCL\\rt-backend-omp.lib exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\hipSYCL\\rt-backend-omp.dll exit 1  # [win]
+    {% if cuda_compiler_version != "None" %}
+    - if not exist %PREFIX%\\Library\\lib\\hipSYCL\\rt-backend-cuda.lib exit 1  # [win]
+    - if not exist %PREFIX%\\Library\\lib\\hipSYCL\\rt-backend-cuda.dll exit 1  # [win]
+    {% endif %}
     - "acpp-info.exe"  # [win]
   requires:
     - {{ compiler("c") }}
