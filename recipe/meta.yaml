@@ -12,7 +12,7 @@ source:
       - patches/fallback-missing-functions.patch  # [linux]
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage('adaptivecpp', max_pin='x.x') }}
   ignore_run_exports:
@@ -20,6 +20,9 @@ build:
     - llvm
     - llvm-openmp  # [not win]
   skip: true  # [osx]
+  skip: true  # [cuda_compiler_version == "11.8"]
+  string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
+  string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
 
 requirements:
   build:
@@ -28,11 +31,20 @@ requirements:
     - cmake
     - ninja  # [not win]
     - spirv-tools
+    {% if cuda_compiler_version != "None" %}
+    - {{ compiler('cuda') }}
+    - cuda-cudart-dev           # [build_platform != target_platform]
+    {% endif %}
   host:
     - clangdev
     - libboost-devel
     - llvm >=14,<19
     - llvm-openmp >=14,<19
+    {% if cuda_compiler_version != "None" %}
+    - cuda-version {{ cuda_compiler_version }}
+    - cuda-driver-dev
+    - cuda-cudart-dev
+    {% endif %}
   run:
     - llvm >=14,<19
 
