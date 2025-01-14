@@ -17,6 +17,9 @@ jobs:
       win_64_cuda_compilerNonecuda_compiler_versionNonellvm_version18:
         CONFIG: win_64_cuda_compilerNonecuda_compiler_versionNonellvm_version18
         UPLOAD_PACKAGES: 'True'
+      win_64_cuda_compilerNonecuda_compiler_versionNonellvm_version19:
+        CONFIG: win_64_cuda_compilerNonecuda_compiler_versionNonellvm_version19
+        UPLOAD_PACKAGES: 'True'
       win_64_cuda_compilercuda-nvcccuda_compiler_version12.6llvm_version16:
         CONFIG: win_64_cuda_compilercuda-nvcccuda_compiler_version12.6llvm_version16
         UPLOAD_PACKAGES: 'True'
@@ -25,6 +28,9 @@ jobs:
         UPLOAD_PACKAGES: 'True'
       win_64_cuda_compilercuda-nvcccuda_compiler_version12.6llvm_version18:
         CONFIG: win_64_cuda_compilercuda-nvcccuda_compiler_version12.6llvm_version18
+        UPLOAD_PACKAGES: 'True'
+      win_64_cuda_compilercuda-nvcccuda_compiler_version12.6llvm_version19:
+        CONFIG: win_64_cuda_compilercuda-nvcccuda_compiler_version12.6llvm_version19
         UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
   variables:
