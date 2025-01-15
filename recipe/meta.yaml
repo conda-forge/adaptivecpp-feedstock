@@ -12,7 +12,7 @@ source:
       - patches/fallback-missing-functions.patch  # [linux]
 
 build:
-  number: 6
+  number: 7
   run_exports:
     - {{ pin_subpackage('adaptivecpp', max_pin='x.x') }}
   ignore_run_exports:
@@ -36,6 +36,7 @@ requirements:
     - make       # [linux]
     - ninja      # [not win]
     - pkgconfig  # [linux]
+    - zlib       # [linux]
     {% if cuda_compiler_version != "None" %}
     - {{ compiler('cuda') }}
     - cuda-cudart-dev  # [build_platform != target_platform]
