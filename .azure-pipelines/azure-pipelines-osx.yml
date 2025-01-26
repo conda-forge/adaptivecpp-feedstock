@@ -8,6 +8,9 @@ jobs:
     vmImage: macOS-13
   strategy:
     matrix:
+      osx_arm64_llvm_version15:
+        CONFIG: osx_arm64_llvm_version15
+        UPLOAD_PACKAGES: 'True'
       osx_arm64_llvm_version16:
         CONFIG: osx_arm64_llvm_version16
         UPLOAD_PACKAGES: 'True'
