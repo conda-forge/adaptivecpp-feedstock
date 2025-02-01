@@ -1,5 +1,10 @@
+# https://github.com/conda-forge/conda-forge-pinning-feedstock/blob/main/recipe/conda_build_config.yaml
+
+c_stdlib_version:  # [osx and x86_64]
+  - '11.0'        # [osx and x86_64]
+
 llvm_version:
-  - 16
-  - 17
+  - 16  # [not (osx and x86_64)]
+  - 17  # [not (osx and x86_64)]
   - 18
   - 19

@@ -24,7 +24,6 @@ build:
     - "*/nvcuda.dll"    # [win]
     - "*/libcuda.so.1"  # [linux]
   skip: true  # [cuda_compiler_version == "11.8"]
-  skip: true  # [osx and x86_64]
   string: cpu_llvm{{ llvm_version }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}_llvm{{ llvm_version }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
 
