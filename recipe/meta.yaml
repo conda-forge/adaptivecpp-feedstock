@@ -9,7 +9,8 @@ source:
   - url: https://github.com/AdaptiveCpp/AdaptiveCpp/archive/v{{ version }}.tar.gz
     sha256: 8cc8a3be7bb38f88d7fd51597e0ec924b124d4233f64da62a31b9945b55612ca
     patches:
-      - patches/fallback-missing-functions.patch  # [linux]
+      - patches/0001-Install-tool-binaries-to-the-same-folder-of-lib.patch  # [linux]
+      - patches/0002-Fall-back-missing-functions.patch  # [linux]
 
 build:
   number: 0
