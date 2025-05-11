@@ -60,8 +60,9 @@ requirements:
   run:
     - clangdev  # [osx]
     - hip-runtime-amd  # [linux and x86_64]
-    - llvm {{ llvm_version }}
     - libllvm{{ llvm_version }}
+    - libnuma  # [linux]
+    - llvm {{ llvm_version }}
     - llvm-openmp {{ llvm_version }}  # [osx]
 
 test:
