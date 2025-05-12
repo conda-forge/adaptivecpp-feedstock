@@ -1,0 +1,25 @@
+From 27ea54e5813592af28a7dc2fe8155572483f465b Mon Sep 17 00:00:00 2001
+From: Jeongseok Lee <jeongseok@meta.com>
+Date: Sun, 11 May 2025 16:02:49 -0700
+Subject: [PATCH 1/2] Install tool binaries to the same folder of lib
+
+---
+ src/compiler/llvm-to-backend/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/compiler/llvm-to-backend/CMakeLists.txt b/src/compiler/llvm-to-backend/CMakeLists.txt
+index 00188ec2..4d4b5b4a 100644
+--- a/src/compiler/llvm-to-backend/CMakeLists.txt
++++ b/src/compiler/llvm-to-backend/CMakeLists.txt
+@@ -113,7 +113,7 @@ function(create_llvm_to_backend_tool)
+ 
+   set(install_subdir hipSYCL/llvm-to-backend)
+   install(TARGETS ${target}-tool
+-    RUNTIME DESTINATION bin/${install_subdir}
++    RUNTIME DESTINATION lib/${install_subdir}
+     LIBRARY DESTINATION lib/${install_subdir}
+     ARCHIVE DESTINATION lib/${install_subdir})
+ endfunction()
+-- 
+2.49.0.windows.1
+

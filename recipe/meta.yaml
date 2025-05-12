@@ -1,5 +1,5 @@
 {% set name = "AdaptiveCpp" %}
-{% set version = "24.10.0" %}
+{% set version = "25.02.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +7,13 @@ package:
 
 source:
   - url: https://github.com/AdaptiveCpp/AdaptiveCpp/archive/v{{ version }}.tar.gz
-    sha256: 3bcd94eee41adea3ccc58390498ec9fd30e1548af5330a319be8ce3e034a6a0b
+    sha256: 8cc8a3be7bb38f88d7fd51597e0ec924b124d4233f64da62a31b9945b55612ca
     patches:
-      - patches/fallback-missing-functions.patch  # [linux]
+      - patches/0001-Install-tool-binaries-to-the-same-folder-of-lib.patch  # [linux]
+      - patches/0002-Fall-back-missing-functions.patch  # [linux]
 
 build:
-  number: 9
+  number: 0
   run_exports:
     - {{ pin_subpackage('adaptivecpp', max_pin='x.x') }}
   ignore_run_exports:
@@ -60,8 +61,9 @@ requirements:
   run:
     - clangdev  # [osx]
     - hip-runtime-amd  # [linux and x86_64]
-    - llvm {{ llvm_version }}
     - libllvm{{ llvm_version }}
+    - libnuma  # [linux]
+    - llvm {{ llvm_version }}
     - llvm-openmp {{ llvm_version }}  # [osx]
 
 test:
