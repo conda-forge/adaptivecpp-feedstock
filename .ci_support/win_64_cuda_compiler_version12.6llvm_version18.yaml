@@ -1,5 +1,5 @@
 c_compiler:
-- vs2019
+- vs2022
 c_stdlib:
 - vs
 channel_sources:
@@ -11,13 +11,10 @@ cuda_compiler:
 cuda_compiler_version:
 - '12.6'
 cxx_compiler:
-- vs2019
+- vs2022
 libboost_devel:
-- '1.86'
+- '1.88'
 llvm_version:
 - '18'
 target_platform:
 - win-64
-zip_keys:
-- - cuda_compiler
-  - cuda_compiler_version
