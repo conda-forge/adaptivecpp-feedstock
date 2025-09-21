@@ -149,59 +149,31 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_c_compiler_version12cuda_compiler_version12.4cxx_compiler_version12llvm_version16</td>
+              <td>linux_ppc64le_llvm_version16</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_c_compiler_version12cuda_compiler_version12.4cxx_compiler_version12llvm_version16" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version16" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_c_compiler_version12cuda_compiler_version12.4cxx_compiler_version12llvm_version17</td>
+              <td>linux_ppc64le_llvm_version17</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_c_compiler_version12cuda_compiler_version12.4cxx_compiler_version12llvm_version17" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version17" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_c_compiler_version12cuda_compiler_version12.4cxx_compiler_version12llvm_version18</td>
+              <td>linux_ppc64le_llvm_version18</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_c_compiler_version12cuda_compiler_version12.4cxx_compiler_version12llvm_version18" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version18" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_ppc64le_c_compiler_version12cuda_compiler_version12.4cxx_compiler_version12llvm_version19</td>
+              <td>linux_ppc64le_llvm_version19</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_c_compiler_version12cuda_compiler_version12.4cxx_compiler_version12llvm_version19" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_c_compiler_version14cuda_compiler_versionNonecxx_compiler_version14llvm_version16</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_c_compiler_version14cuda_compiler_versionNonecxx_compiler_version14llvm_version16" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_c_compiler_version14cuda_compiler_versionNonecxx_compiler_version14llvm_version17</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_c_compiler_version14cuda_compiler_versionNonecxx_compiler_version14llvm_version17" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_c_compiler_version14cuda_compiler_versionNonecxx_compiler_version14llvm_version18</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_c_compiler_version14cuda_compiler_versionNonecxx_compiler_version14llvm_version18" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>linux_ppc64le_c_compiler_version14cuda_compiler_versionNonecxx_compiler_version14llvm_version19</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_c_compiler_version14cuda_compiler_versionNonecxx_compiler_version14llvm_version19" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version19" alt="variant">
                 </a>
               </td>
             </tr><tr>
