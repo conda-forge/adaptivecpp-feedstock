@@ -9,12 +9,12 @@ channel_targets:
 cuda_compiler:
 - cuda-nvcc
 cuda_compiler_version:
-- '12.6'
+- '12.9'
 cxx_compiler:
 - vs2022
 libboost_devel:
 - '1.88'
 llvm_version:
-- '19'
+- '16'
 target_platform:
 - win-64
