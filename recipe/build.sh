@@ -31,6 +31,18 @@ if [[ "${target_platform}" == "linux-aarch64" ]]; then
   export CFLAGS="${CFLAGS} ${ACPP_ARM_ATTR_UNDEF}"
 fi
 
+# CUDA 13 compatibility: remap old cudaMemPrefetchAsync(...) to new API via macros
+if [[ "${cuda_compiler_version:-None}" == "13.0" ]]; then
+  # quiet clang-16 "newer than 11.8" noise (harmless)
+  export CXXFLAGS="${CXXFLAGS} -Wno-unknown-cuda-version"
+
+  # Build a cudaMemLocation from a device ordinal or cudaCpuDeviceId (host)
+  export CXXFLAGS="${CXXFLAGS} -DACPP_CUDA13_LOC(dev)=((dev)==cudaCpuDeviceId?cudaMemLocation{cudaMemLocationTypeHost,0}:cudaMemLocation{cudaMemLocationTypeDevice,(dev)})"
+
+  # Rewrite legacy 4-arg prefetch to the CUDA 13 5-arg signature
+  export CXXFLAGS="${CXXFLAGS} -DcudaMemPrefetchAsync(ptr,count,device,stream)=cudaMemPrefetchAsync((ptr),static_cast<size_t>(count),ACPP_CUDA13_LOC(device),0u,(stream))"
+fi
+
 cmake \
   $SRC_DIR \
   ${CMAKE_ARGS} \
