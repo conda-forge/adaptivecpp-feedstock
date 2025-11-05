@@ -1,5 +1,5 @@
 {% set name = "AdaptiveCpp" %}
-{% set version = "25.02.0" %}
+{% set version = "25.10.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,13 @@ package:
 
 source:
   - url: https://github.com/AdaptiveCpp/AdaptiveCpp/archive/v{{ version }}.tar.gz
-    sha256: 8cc8a3be7bb38f88d7fd51597e0ec924b124d4233f64da62a31b9945b55612ca
+    sha256: 334b16ebff373bd2841f83332c2ae9a45ec192f2cf964d5fdfe94e1140776059
     patches:
       - patches/0001-Install-tool-binaries-to-the-same-folder-of-lib.patch  # [linux]
       - patches/0002-Fall-back-missing-functions.patch  # [linux]
 
 build:
-  number: 2
+  number: 0
   run_exports:
     - {{ pin_subpackage('adaptivecpp', max_pin='x.x') }}
   ignore_run_exports:
