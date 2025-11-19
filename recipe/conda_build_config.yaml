@@ -1,5 +1,4 @@
-llvm_version:
-  - 16
-  - 17
-  - 18
+llvm_version: 
+  - 21
+  - 20
   - 19
