@@ -16,20 +16,12 @@ jobs:
         CONFIG: linux_64_cuda_compiler_version12.9llvm_version20
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_64_cuda_compiler_version12.9llvm_version21:
-        CONFIG: linux_64_cuda_compiler_version12.9llvm_version21
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
       linux_64_cuda_compiler_versionNonellvm_version19:
         CONFIG: linux_64_cuda_compiler_versionNonellvm_version19
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
       linux_64_cuda_compiler_versionNonellvm_version20:
         CONFIG: linux_64_cuda_compiler_versionNonellvm_version20
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_64_cuda_compiler_versionNonellvm_version21:
-        CONFIG: linux_64_cuda_compiler_versionNonellvm_version21
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
       linux_aarch64_cuda_compiler_version12.9llvm_version19:
@@ -40,10 +32,6 @@ jobs:
         CONFIG: linux_aarch64_cuda_compiler_version12.9llvm_version20
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_aarch64_cuda_compiler_version12.9llvm_version21:
-        CONFIG: linux_aarch64_cuda_compiler_version12.9llvm_version21
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
       linux_aarch64_cuda_compiler_versionNonellvm_version19:
         CONFIG: linux_aarch64_cuda_compiler_versionNonellvm_version19
         UPLOAD_PACKAGES: 'True'
@@ -52,20 +40,12 @@ jobs:
         CONFIG: linux_aarch64_cuda_compiler_versionNonellvm_version20
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_aarch64_cuda_compiler_versionNonellvm_version21:
-        CONFIG: linux_aarch64_cuda_compiler_versionNonellvm_version21
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
       linux_ppc64le_llvm_version19:
         CONFIG: linux_ppc64le_llvm_version19
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
       linux_ppc64le_llvm_version20:
         CONFIG: linux_ppc64le_llvm_version20
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
-      linux_ppc64le_llvm_version21:
-        CONFIG: linux_ppc64le_llvm_version21
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-x86_64:alma9
   timeoutInMinutes: 360

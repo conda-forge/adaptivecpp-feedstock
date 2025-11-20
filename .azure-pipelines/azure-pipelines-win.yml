@@ -14,17 +14,11 @@ jobs:
       win_64_cuda_compiler_version12.9llvm_version20:
         CONFIG: win_64_cuda_compiler_version12.9llvm_version20
         UPLOAD_PACKAGES: 'True'
-      win_64_cuda_compiler_version12.9llvm_version21:
-        CONFIG: win_64_cuda_compiler_version12.9llvm_version21
-        UPLOAD_PACKAGES: 'True'
       win_64_cuda_compiler_versionNonellvm_version19:
         CONFIG: win_64_cuda_compiler_versionNonellvm_version19
         UPLOAD_PACKAGES: 'True'
       win_64_cuda_compiler_versionNonellvm_version20:
         CONFIG: win_64_cuda_compiler_versionNonellvm_version20
-        UPLOAD_PACKAGES: 'True'
-      win_64_cuda_compiler_versionNonellvm_version21:
-        CONFIG: win_64_cuda_compiler_versionNonellvm_version21
         UPLOAD_PACKAGES: 'True'
   timeoutInMinutes: 360
   variables:
