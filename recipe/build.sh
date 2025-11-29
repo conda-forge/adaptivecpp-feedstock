@@ -36,11 +36,22 @@ if [[ "${cuda_compiler_version:-None}" == "13.0" ]]; then
   # quiet clang-16 "newer than 11.8" noise (harmless)
   export CXXFLAGS="${CXXFLAGS} -Wno-unknown-cuda-version"
 
-  # Build a cudaMemLocation from a device ordinal or cudaCpuDeviceId (host)
-  export CXXFLAGS="${CXXFLAGS} -DACPP_CUDA13_LOC\(dev\)=\(\(dev\)==cudaCpuDeviceId?cudaMemLocation{cudaMemLocationTypeHost,0}:cudaMemLocation{cudaMemLocationTypeDevice,\(dev\)}\)"
+  # Create compatibility header
+  cat > cuda13_compat.h <<EOF
+#ifndef CUDA13_COMPAT_H
+#define CUDA13_COMPAT_H
+#include <cuda_runtime_api.h>
+#if defined(CUDART_VERSION) && CUDART_VERSION >= 13000
+#ifndef ACPP_CUDA13_LOC
+#define ACPP_CUDA13_LOC(dev) ((dev)==cudaCpuDeviceId?cudaMemLocation{cudaMemLocationTypeHost,0}:cudaMemLocation{cudaMemLocationTypeDevice,(dev)})
+#endif
+#define cudaMemPrefetchAsync(ptr,count,device,stream) cudaMemPrefetchAsync((ptr),static_cast<size_t>(count),ACPP_CUDA13_LOC(device),0u,(stream))
+#endif
+#endif
+EOF
 
-  # Rewrite legacy 4-arg prefetch to the CUDA 13 5-arg signature
-  export CXXFLAGS="${CXXFLAGS} -DcudaMemPrefetchAsync\(ptr,count,device,stream\)=cudaMemPrefetchAsync\(\(ptr\),static_cast\<size_t\>\(count\),ACPP_CUDA13_LOC\(device\),0u,\(stream\)\)"
+  # Force include it
+  export CXXFLAGS="${CXXFLAGS} -include $(pwd)/cuda13_compat.h"
 fi
 
 cmake \
