@@ -48,7 +48,7 @@ requirements:
     - libboost-devel
     - llvmdev {{ llvm_version }}
     - llvm-openmp {{ llvm_version }}
-    - llvm-spirv   # [linux]
+    - llvm-spirv {{ llvm_version }}.*  # [linux]
     - libopencl-devel
     - spirv-tools  # [linux]
     {% if cuda_compiler_version != "None" %}
