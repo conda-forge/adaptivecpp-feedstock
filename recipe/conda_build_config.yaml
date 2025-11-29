@@ -3,6 +3,3 @@ llvm_version:
   - 17
   - 18
   - 19
-
-spirv_tools:
-  - 2024
