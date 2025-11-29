@@ -289,34 +289,6 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>win_64_cuda_compiler_version13.0llvm_version16</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version13.0llvm_version16" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_64_cuda_compiler_version13.0llvm_version17</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version13.0llvm_version17" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_64_cuda_compiler_version13.0llvm_version18</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version13.0llvm_version18" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>win_64_cuda_compiler_version13.0llvm_version19</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version13.0llvm_version19" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
               <td>win_64_cuda_compiler_versionNonellvm_version16</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=24615&branchName=main">
