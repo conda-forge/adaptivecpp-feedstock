@@ -1,4 +1,4 @@
-{% set name = "AdaptiveCpp" %}
+{% set name = "adaptivecpp" %}
 {% set version = "25.10.0" %}
 
 package:
@@ -6,112 +6,72 @@ package:
   version: {{ version }}
 
 source:
-  - url: https://github.com/AdaptiveCpp/AdaptiveCpp/archive/v{{ version }}.tar.gz
-    sha256: 334b16ebff373bd2841f83332c2ae9a45ec192f2cf964d5fdfe94e1140776059
-    patches:
-      - patches/0001-Install-tool-binaries-to-the-same-folder-of-lib.patch  # [linux]
-      - patches/0002-Fall-back-missing-functions.patch  # [linux]
+  url: https://github.com/AdaptiveCpp/AdaptiveCpp/archive/v{{ version }}.tar.gz
+  sha256: 7580aa122c28c32c556572226720902053224352760482a842329e4232d95636
 
 build:
-  number: 0
-  run_exports:
-    - {{ pin_subpackage('adaptivecpp', max_pin='x.x') }}
-  ignore_run_exports:
-    - libboost
-    - llvm
-    - llvm-openmp  # [not win]
-  missing_dso_whitelist:
-    # https://conda-forge.org/docs/maintainer/knowledge_base/#nvcudadll-cannot-be-found-on-windows
-    - "*/nvcuda.dll"    # [win]
-    - "*/libcuda.so.1"  # [linux]
+  number: 1
   skip: true  # [osx and x86_64]
   skip: true  # [win and cuda_compiler_version == "13.0"]
   string: cpu_llvm{{ llvm_version }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}_llvm{{ llvm_version }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
+  run_exports:
+    - {{ pin_subpackage(name, max_pin='x.x') }}
 
 requirements:
   build:
     - {{ compiler('cxx') }}
-    - {{ stdlib('c') }}
+    - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - cmake
-    - doxygen
-    - make       # [linux]
-    - ninja      # [not win]
-    - pkgconfig  # [linux]
-    {% if cuda_compiler_version != "None" %}
-    - {{ compiler('cuda') }}
-    - cuda-cudart-dev  # [build_platform != target_platform]
-    {% endif %}
+    - ninja
+    - python
   host:
-    - clangdev
-    - hipcc        # [linux and x86_64]
+    - llvm {{ llvm_version }}
+    - llvm-dev {{ llvm_version }}
+    - clang {{ llvm_version }}
+    - clang-tools {{ llvm_version }}
     - libboost-devel
-    - llvmdev {{ llvm_version }}
-    - llvm-openmp {{ llvm_version }}
-    - llvm-spirv {{ llvm_version }}.*  # [linux]
-    - libopencl-devel
-    - spirv-tools  # [linux]
-    {% if cuda_compiler_version != "None" %}
+    - libxml2
+    - libnuma  # [linux]
     # cuda-compat is needed for libcuda.so.1
     - cuda-compat      # [linux and x86_64]
     - cuda-cudart-dev
-    - cuda-driver-dev  # [linux]
-    - cuda-version {{ cuda_compiler_version }}
-    {% endif %}
+    - cuda-driver-dev  # [linux and x86_64]
+    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
+    - llvm-spirv {{ llvm_version }}.*  # [linux]
+    - libopencl-devel
+    - spirv-tools  # [linux]
   run:
-    - clangdev  # [osx]
-    - hip-runtime-amd  # [linux and x86_64]
-    - libllvm{{ llvm_version }}
-    - libnuma  # [linux]
     - llvm {{ llvm_version }}
-    - llvm-openmp {{ llvm_version }}  # [osx]
+    - llvm-dev {{ llvm_version }}
+    - clang {{ llvm_version }}
+    - clang-tools {{ llvm_version }}
+    - libnuma  # [linux]
+    - {{ pin_compatible('cuda-version', min_pin='x', max_pin='x') }}  # [cuda_compiler_version != "None"]
+    - cuda-cudart-dev  # [cuda_compiler_version != "None"]
+    - __cuda  # [cuda_compiler_version != "None"]
 
 test:
   commands:
-    - test -f $PREFIX/include/AdaptiveCpp/sycl/sycl.hpp  # [not win]
-    - test -f $PREFIX/lib/cmake/AdaptiveCpp/adaptivecpp-config.cmake  # [not win]
-    - test -f $PREFIX/lib/libacpp-common${SHLIB_EXT}  # [not win]
-    - test -f $PREFIX/lib/hipSYCL/librt-backend-omp${SHLIB_EXT}  # [not win]
-    - test -f $PREFIX/lib/hipSYCL/librt-backend-ocl${SHLIB_EXT}  # [linux]
-    - test -f $PREFIX/lib/hipSYCL/librt-backend-hip${SHLIB_EXT}  # [linux and x86_64]
-    {% if cuda_compiler_version != "None" %}
-    - test -f $PREFIX/lib/hipSYCL/librt-backend-cuda${SHLIB_EXT}  # [not win]
-    {% endif %}
-    - acpp-info  # [not win]
-    - if not exist %PREFIX%\\Library\\include\\AdaptiveCpp\\SYCL\\sycl.hpp exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\lib\\cmake\\AdaptiveCpp\\adaptivecpp-config.cmake exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\lib\\acpp-common.lib exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\bin\\acpp-common.dll exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\lib\\hipSYCL\\rt-backend-omp.lib exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\bin\\hipSYCL\\rt-backend-omp.dll exit 1  # [win]
-    {% if cuda_compiler_version != "None" %}
-    - if not exist %PREFIX%\\Library\\lib\\hipSYCL\\rt-backend-cuda.lib exit 1  # [win]
-    - if not exist %PREFIX%\\Library\\bin\\hipSYCL\\rt-backend-cuda.dll exit 1  # [win]
-    {% endif %}
-    - "acpp-info.exe"  # [win]
-  requires:
-    - {{ compiler("c") }}
-    - {{ compiler("cxx") }}
-    - clangdev
-    - cmake
-    - ninja  # [unix]
-  files:
-    - tests/
+    - acpp --version
+    - test -f $PREFIX/lib/libacpp-rt${SHLIB_EXT}  # [unix]
+    - if not exist %LIBRARY_LIB%\\acpp-rt.lib exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\\acpp-rt.dll exit 1  # [win]
 
 about:
-  home: https://adaptivecpp.github.io/
-  summary: 'The independent, community-driven platform for heterogeneous programming in C++'
+  home: https://github.com/AdaptiveCpp/AdaptiveCpp
+  license: BSD-2-Clause-Views
+  license_family: BSD
+  license_file: LICENSE.txt
+  summary: AdaptiveCpp is an independent, community-driven modern C++ compiler project for heterogeneous hardware
   description: |
-    AdaptiveCpp is the independent, community-driven modern platform for
-    C++-based heterogeneous programming models targeting CPUs and GPUs from all
-    major vendors. AdaptiveCpp lets applications adapt themselves to all the
-    hardware found in the system. This includes use cases where a single binary
-    needs to be able to target all supported hardware, or utilize hardware from
-    different vendors simultaneously.
-  license: BSD-2-Clause
-  license_file: LICENSE
+    AdaptiveCpp is an independent, community-driven modern C++ compiler project for heterogeneous hardware.
+    It has been developed by Heidelberg University to support their research on parallel programming models.
+  doc_url: https://github.com/AdaptiveCpp/AdaptiveCpp
   dev_url: https://github.com/AdaptiveCpp/AdaptiveCpp
 
 extra:
   recipe-maintainers:
+    - illuhad
     - jeongseok-meta
