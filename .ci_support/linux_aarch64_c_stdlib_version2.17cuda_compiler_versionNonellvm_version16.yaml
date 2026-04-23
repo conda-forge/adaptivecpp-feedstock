@@ -23,11 +23,11 @@ docker_image:
 libboost_devel:
 - '1.88'
 llvm_version:
-- '17'
+- '16'
 spirv_tools:
 - '2025'
 target_platform:
-- linux-ppc64le
+- linux-aarch64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
