@@ -53,6 +53,8 @@ requirements:
     - llvm-spirv {{ llvm_version }}  # [linux]
     - libopencl-devel
     - rocm-device-libs  # [linux and x86_64]
+    # LLVM 16-19's llvm-spirv packages are not compatible with spirv-tools 2026.
+    # Revisit this pin when moving the Linux LLVM/SPIR-V matrix to LLVM 21+.
     - spirv-tools <2026  # [linux]
     {% if cuda_compiler_version != "None" %}
     # cuda-compat is needed for libcuda.so.1
