@@ -11,27 +11,35 @@ jobs:
       win_64_cuda_compiler_version12.9llvm_version16:
         CONFIG: win_64_cuda_compiler_version12.9llvm_version16
         UPLOAD_PACKAGES: 'True'
+        store_build_artifacts: false
       win_64_cuda_compiler_version12.9llvm_version17:
         CONFIG: win_64_cuda_compiler_version12.9llvm_version17
         UPLOAD_PACKAGES: 'True'
+        store_build_artifacts: false
       win_64_cuda_compiler_version12.9llvm_version18:
         CONFIG: win_64_cuda_compiler_version12.9llvm_version18
         UPLOAD_PACKAGES: 'True'
+        store_build_artifacts: false
       win_64_cuda_compiler_version12.9llvm_version19:
         CONFIG: win_64_cuda_compiler_version12.9llvm_version19
         UPLOAD_PACKAGES: 'True'
+        store_build_artifacts: false
       win_64_cuda_compiler_versionNonellvm_version16:
         CONFIG: win_64_cuda_compiler_versionNonellvm_version16
         UPLOAD_PACKAGES: 'True'
+        store_build_artifacts: false
       win_64_cuda_compiler_versionNonellvm_version17:
         CONFIG: win_64_cuda_compiler_versionNonellvm_version17
         UPLOAD_PACKAGES: 'True'
+        store_build_artifacts: false
       win_64_cuda_compiler_versionNonellvm_version18:
         CONFIG: win_64_cuda_compiler_versionNonellvm_version18
         UPLOAD_PACKAGES: 'True'
+        store_build_artifacts: false
       win_64_cuda_compiler_versionNonellvm_version19:
         CONFIG: win_64_cuda_compiler_versionNonellvm_version19
         UPLOAD_PACKAGES: 'True'
+        store_build_artifacts: false
   timeoutInMinutes: 360
   variables:
     CONDA_BLD_PATH: D:\\bld\\

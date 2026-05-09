@@ -1,5 +1,5 @@
 {% set name = "AdaptiveCpp" %}
-{% set version = "25.02.0" %}
+{% set version = "25.10.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,13 @@ package:
 
 source:
   - url: https://github.com/AdaptiveCpp/AdaptiveCpp/archive/v{{ version }}.tar.gz
-    sha256: 8cc8a3be7bb38f88d7fd51597e0ec924b124d4233f64da62a31b9945b55612ca
+    sha256: 334b16ebff373bd2841f83332c2ae9a45ec192f2cf964d5fdfe94e1140776059
     patches:
       - patches/0001-Install-tool-binaries-to-the-same-folder-of-lib.patch  # [linux]
       - patches/0002-Fall-back-missing-functions.patch  # [linux]
 
 build:
-  number: 2
+  number: 0
   run_exports:
     - {{ pin_subpackage('adaptivecpp', max_pin='x.x') }}
   ignore_run_exports:
@@ -25,6 +25,7 @@ build:
     - "*/nvcuda.dll"    # [win]
     - "*/libcuda.so.1"  # [linux]
   skip: true  # [osx and x86_64]
+  skip: true  # [linux and aarch64 and cuda_compiler_version != "None"]
   string: cpu_llvm{{ llvm_version }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
   string: cuda{{ cuda_compiler_version | replace('.', '') }}_llvm{{ llvm_version }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != "None"]
 
@@ -45,25 +46,33 @@ requirements:
     - clangdev
     - hipcc        # [linux and x86_64]
     - libboost-devel
+    - lld {{ llvm_version }}  # [not win]
     - llvmdev {{ llvm_version }}
     - llvm-openmp {{ llvm_version }}
-    - llvm-spirv   # [linux]
+    - llvm-spirv {{ llvm_version }}  # [linux]
     - libopencl-devel
-    - spirv-tools  # [linux]
+    - rocm-device-libs  # [linux and x86_64]
+    - spirv-tools <2026  # [linux]
     {% if cuda_compiler_version != "None" %}
     # cuda-compat is needed for libcuda.so.1
     - cuda-compat      # [linux]
     - cuda-cudart-dev
     - cuda-driver-dev  # [linux]
+    - cuda-nvvm-tools  # [linux and x86_64]
     - cuda-version {{ cuda_compiler_version }}
     {% endif %}
   run:
     - clangdev  # [osx]
     - hip-runtime-amd  # [linux and x86_64]
+    - lld {{ llvm_version }}  # [not win]
     - libllvm{{ llvm_version }}
     - libnuma  # [linux]
     - llvm {{ llvm_version }}
     - llvm-openmp {{ llvm_version }}  # [osx]
+    - rocm-device-libs  # [linux and x86_64]
+    {% if cuda_compiler_version != "None" %}
+    - cuda-nvvm-tools  # [linux and x86_64]
+    {% endif %}
 
 test:
   commands:

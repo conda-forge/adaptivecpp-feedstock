@@ -20,6 +20,25 @@ else
   with_rocm_backend=OFF
 fi
 
+cmake_extra_args=()
+
+if [[ "${target_platform}" == linux* ]]; then
+  cmake_extra_args+=("-DACPP_LLD_PATH=${PREFIX}/bin/ld.lld")
+
+  if [[ "${target_platform}" != "${build_platform}" ]]; then
+    cmake_extra_args+=("-DACPP_HOST_FORCE_MCPU_TARGET=generic")
+  fi
+fi
+
+if [[ "${with_rocm_backend}" == ON ]]; then
+  cmake_extra_args+=("-DROCM_PATH=${PREFIX}")
+  cmake_extra_args+=("-DROCM_DEVICE_LIBS_PATH=${PREFIX}/lib/amdgcn/bitcode")
+fi
+
+if [[ "${with_cuda_backend}" == ON && "${target_platform}" == linux-64 ]]; then
+  cmake_extra_args+=("-DCUDA_DEVICE_LIBS_PATH=${PREFIX}/nvvm/libdevice")
+fi
+
 # Workaround for GCC 14 on AArch64 expanding __arm_* keyword-attributes to [[arm::...]]
 # which breaks Clang headers (llvm/llvm-project#78691). Upstream Clang has a fix,
 # but undefining these macros at compile time avoids the token-paste error.
@@ -40,7 +59,8 @@ cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DWITH_CUDA_BACKEND=$with_cuda_backend \
   -DWITH_OPENCL_BACKEND=$with_opencl_backend \
-  -DWITH_ROCM_BACKEND=$with_rocm_backend
+  -DWITH_ROCM_BACKEND=$with_rocm_backend \
+  "${cmake_extra_args[@]}"
 
 cmake --build build --parallel
 
