@@ -13,7 +13,7 @@ source:
       - patches/0002-Fall-back-missing-functions.patch  # [linux]
 
 build:
-  number: 0
+  number: 1
   run_exports:
     - {{ pin_subpackage('adaptivecpp', max_pin='x.x') }}
   ignore_run_exports:
