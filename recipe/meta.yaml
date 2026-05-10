@@ -121,6 +121,8 @@ test:
     {% if cuda_compiler_version != "None" %}
     - test -f $PREFIX/lib/hipSYCL/librt-backend-cuda${SHLIB_EXT}  # [not win]
     - test -f $PREFIX/nvvm/libdevice/libdevice.10.bc  # [linux and x86_64]
+    - cmake -S tests/cmake-cuda-smoke -B test-build-cuda -G Ninja -DACPP_TARGETS=cuda:sm_80  # [linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"]
+    - ACPP_CUDA_CXX_FLAGS="-I$PREFIX/targets/x86_64-linux/include -U__FLOAT128__ -U__SIZEOF_FLOAT128__ -isystem $PREFIX/include/AdaptiveCpp/hipSYCL/std/hiplike" ACPP_CUDA_LINK_LINE="-Wl,-rpath=$PREFIX/targets/x86_64-linux/lib -L$PREFIX/targets/x86_64-linux/lib -lcudart" cmake --build test-build-cuda  # [linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"]
     {% endif %}
     - acpp-info  # [not win]
     - cmake -S tests -B test-build -G Ninja  # [linux and x86_64 and cuda_compiler_version == "None"]
@@ -141,6 +143,11 @@ test:
     - {{ compiler("c") }}
     - {{ compiler("cxx") }}
     - clangdev  # [not linux]
+    # Test-only CUDA headers let CI compile a CMake AdaptiveCpp CUDA target without a GPU.
+    - cuda-crt-dev_linux-64  # [linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"]
+    - cuda-cudart-dev        # [linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"]
+    - cuda-driver-dev        # [linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"]
+    - libcurand-dev          # [linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"]
     - cmake
     - ninja  # [unix]
   files:
