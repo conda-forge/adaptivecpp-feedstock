@@ -35,7 +35,7 @@ source:
     folder: opencl-clhpp  # [linux]
 
 build:
-  number: 4
+  number: 5
   run_exports:
     - {{ pin_subpackage('adaptivecpp', max_pin='x.x') }}
   ignore_run_exports:
@@ -88,6 +88,8 @@ requirements:
     {% endif %}
   run:
     - clangdev  # [osx]
+    # The acpp driver defaults to the clang++ installed by clangxx.
+    - clangxx {{ llvm_version }}  # [linux]
     - hip-runtime-amd  # [linux and x86_64]
     - lld {{ llvm_version }}  # [not win]
     - libllvm{{ llvm_version }}
@@ -112,6 +114,7 @@ test:
     - test -f $PREFIX/lib/hipSYCL/bitcode/libkernel-sscp-host-full.bc  # [linux]
     - test ! -e $PREFIX/lib/lib/hipSYCL/bitcode/libkernel-sscp-host-full.bc  # [linux]
     - test -x $PREFIX/lib/hipSYCL/llvm-to-backend/llvm-to-spirv-tool  # [linux]
+    - "test -x $PREFIX/bin/clang++-{{ llvm_version }} || test -x $PREFIX/bin/clang++"  # [linux]
     - "test -x $PREFIX/bin/opt-{{ llvm_version }} || test -x $PREFIX/bin/opt"  # [linux]
     - "test -x $PREFIX/bin/llc-{{ llvm_version }} || test -x $PREFIX/bin/llc"  # [linux]
     - "! grep -R \"_build_env.*/nvvm/libdevice\\|/lib/lib/hipSYCL/bitcode\" $PREFIX/etc/AdaptiveCpp $PREFIX/lib/cmake/AdaptiveCpp"  # [linux]
@@ -137,8 +140,7 @@ test:
   requires:
     - {{ compiler("c") }}
     - {{ compiler("cxx") }}
-    - clangdev
-    - clangxx {{ llvm_version }}  # [linux]
+    - clangdev  # [not linux]
     - cmake
     - ninja  # [unix]
   files:
