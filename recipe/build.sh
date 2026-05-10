@@ -24,10 +24,20 @@ cmake_extra_args=()
 
 if [[ "${target_platform}" == linux* ]]; then
   cmake_extra_args+=("-DACPP_LLD_PATH=${PREFIX}/bin/ld.lld")
+  cmake_extra_args+=("-DACPP_OPENCL_HEADERS_SOURCE_DIR=${SRC_DIR}/opencl-headers")
+  cmake_extra_args+=("-DACPP_OPENCL_CLHPP_SOURCE_DIR=${SRC_DIR}/opencl-clhpp")
+  cmake_extra_args+=("-DACPP_LLVMSPIRV_SOURCE_DIR=${SRC_DIR}/acpp-spirv-llvm-translator")
+  cmake_extra_args+=("-DACPP_SPIRV_HEADERS_SOURCE_DIR=${PREFIX}")
+  cmake_extra_args+=("-DFETCHCONTENT_FULLY_DISCONNECTED=ON")
 
   if [[ "${target_platform}" != "${build_platform}" ]]; then
     cmake_extra_args+=("-DACPP_HOST_FORCE_MCPU_TARGET=generic")
   fi
+
+  test -f "${PREFIX}/include/spirv/unified1/spirv.hpp"
+  test -f "${SRC_DIR}/opencl-headers/CL/cl.h"
+  test -f "${SRC_DIR}/opencl-clhpp/include/CL/opencl.hpp"
+  test -f "${SRC_DIR}/acpp-spirv-llvm-translator/CMakeLists.txt"
 fi
 
 if [[ "${with_rocm_backend}" == ON ]]; then

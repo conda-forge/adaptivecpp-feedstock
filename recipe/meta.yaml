@@ -1,5 +1,17 @@
 {% set name = "AdaptiveCpp" %}
 {% set version = "25.10.0" %}
+{% set llvm_spirv_rev = {
+    "16": "d678e6a2a95849c9985c8d209f67b318999083c6",
+    "17": "21d3f7deabd85dcdebd207d8dc75958ab902e4a4",
+    "18": "530c950568ce80137e1c0876d9afc403455a3cb6",
+    "19": "ed04cf4540ec8b1cda2921c3f2eabc72a9291465",
+} %}
+{% set llvm_spirv_sha256 = {
+    "16": "cabeb13932480edeb53e07797165b2a29ffe9fff82701504e6bb9b9e605c8e64",
+    "17": "b227a5adb4590ba28dd5fa612b96f732847d4b5c6019b4fd94c7397f4ee7b1e9",
+    "18": "4d52536344fe0a4962380ab0316db7e5f35cd218d8fcbdf0c795a7eb57302574",
+    "19": "9098743b0b0e759b02e3e4e1efc1931f51bed87b89296dada072a0eedeb1a06a",
+} %}
 
 package:
   name: {{ name|lower }}
@@ -11,9 +23,19 @@ source:
     patches:
       - patches/0001-Install-tool-binaries-to-the-same-folder-of-lib.patch  # [linux]
       - patches/0002-Fall-back-missing-functions.patch  # [linux]
+      - patches/0003-Use-packaged-dependency-sources.patch  # [linux]
+  - url: https://github.com/AdaptiveCpp/SPIRV-LLVM-Translator/archive/{{ llvm_spirv_rev[llvm_version|string] }}.tar.gz  # [linux]
+    sha256: {{ llvm_spirv_sha256[llvm_version|string] }}  # [linux]
+    folder: acpp-spirv-llvm-translator  # [linux]
+  - url: https://github.com/KhronosGroup/OpenCL-Headers/archive/265df85aec478d14a5c5880d7bb92d7dd52714ef.tar.gz  # [linux]
+    sha256: 07002bdb6107dfc8ab1736c3894ff7f1501029751960c0b2dd6157e43c0b9290  # [linux]
+    folder: opencl-headers  # [linux]
+  - url: https://github.com/KhronosGroup/OpenCL-CLHPP/archive/67d100e70612341707725b6648ccca4c10b0dc31.tar.gz  # [linux]
+    sha256: a6112af8ba2cc8a5248bcc7399624258cb9609b31ccd4a65222bf61893c2c618  # [linux]
+    folder: opencl-clhpp  # [linux]
 
 build:
-  number: 3
+  number: 4
   run_exports:
     - {{ pin_subpackage('adaptivecpp', max_pin='x.x') }}
   ignore_run_exports:
@@ -50,11 +72,11 @@ requirements:
     - lld {{ llvm_version }}  # [not win]
     - llvmdev {{ llvm_version }}
     - llvm-openmp {{ llvm_version }}
-    - llvm-spirv {{ llvm_version }}  # [linux]
     - libopencl-devel
     - rocm-device-libs  # [linux and x86_64]
-    # LLVM 16-19's llvm-spirv packages are not compatible with spirv-tools 2026.
-    # Revisit this pin when moving the Linux LLVM/SPIR-V matrix to LLVM 21+.
+    - spirv-headers  # [linux]
+    # AdaptiveCpp builds its own SPIR-V translator fork from the source above.
+    # Keep SPIRV-Tools below 2026 while the Linux matrix uses LLVM 16-19.
     - spirv-tools <2026  # [linux]
     {% if cuda_compiler_version != "None" %}
     # cuda-compat is needed for libcuda.so.1
@@ -89,6 +111,7 @@ test:
     - test -f $PREFIX/lib/hipSYCL/librt-backend-hip${SHLIB_EXT}  # [linux and x86_64]
     - test -f $PREFIX/lib/hipSYCL/bitcode/libkernel-sscp-host-full.bc  # [linux]
     - test ! -e $PREFIX/lib/lib/hipSYCL/bitcode/libkernel-sscp-host-full.bc  # [linux]
+    - test -x $PREFIX/lib/hipSYCL/llvm-to-backend/llvm-to-spirv-tool  # [linux]
     - "test -x $PREFIX/bin/opt-{{ llvm_version }} || test -x $PREFIX/bin/opt"  # [linux]
     - "test -x $PREFIX/bin/llc-{{ llvm_version }} || test -x $PREFIX/bin/llc"  # [linux]
     - "! grep -R \"_build_env.*/nvvm/libdevice\\|/lib/lib/hipSYCL/bitcode\" $PREFIX/etc/AdaptiveCpp $PREFIX/lib/cmake/AdaptiveCpp"  # [linux]
