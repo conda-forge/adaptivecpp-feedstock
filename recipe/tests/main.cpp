@@ -55,6 +55,22 @@ int main(int argc, char** argv) {
       std::cout << "--------------------------------------\n\n";
     }
 
+    int value = 0;
+    sycl::queue queue{sycl::default_selector_v};
+    {
+      sycl::buffer<int, 1> buffer{&value, sycl::range<1>{1}};
+      queue.submit([&](sycl::handler& handler) {
+        auto output = buffer.get_access<sycl::access::mode::write>(handler);
+        handler.single_task([=]() { output[0] = 42; });
+      });
+      queue.wait_and_throw();
+    }
+
+    if (value != 42) {
+      std::cerr << "Unexpected kernel result: " << value << "\n";
+      return 1;
+    }
+
   } catch (sycl::exception const& e) {
     std::cerr << "SYCL Exception: " << e.what() << "\n";
     return 1;
