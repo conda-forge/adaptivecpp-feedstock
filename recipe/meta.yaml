@@ -13,7 +13,7 @@ source:
       - patches/0002-Fall-back-missing-functions.patch  # [linux]
 
 build:
-  number: 2
+  number: 3
   run_exports:
     - {{ pin_subpackage('adaptivecpp', max_pin='x.x') }}
   ignore_run_exports:
@@ -71,6 +71,8 @@ requirements:
     - libllvm{{ llvm_version }}
     - libnuma  # [linux]
     - llvm {{ llvm_version }}
+    # The generic/OpenMP runtime JIT invokes opt/llc from the matching LLVM.
+    - llvm-tools {{ llvm_version }}  # [not win]
     - llvm-openmp {{ llvm_version }}  # [osx]
     - rocm-device-libs  # [linux and x86_64]
     {% if cuda_compiler_version != "None" %}
@@ -85,10 +87,19 @@ test:
     - test -f $PREFIX/lib/hipSYCL/librt-backend-omp${SHLIB_EXT}  # [not win]
     - test -f $PREFIX/lib/hipSYCL/librt-backend-ocl${SHLIB_EXT}  # [linux]
     - test -f $PREFIX/lib/hipSYCL/librt-backend-hip${SHLIB_EXT}  # [linux and x86_64]
+    - test -f $PREFIX/lib/hipSYCL/bitcode/libkernel-sscp-host-full.bc  # [linux]
+    - test ! -e $PREFIX/lib/lib/hipSYCL/bitcode/libkernel-sscp-host-full.bc  # [linux]
+    - "test -x $PREFIX/bin/opt-{{ llvm_version }} || test -x $PREFIX/bin/opt"  # [linux]
+    - "test -x $PREFIX/bin/llc-{{ llvm_version }} || test -x $PREFIX/bin/llc"  # [linux]
+    - "! grep -R \"_build_env.*/nvvm/libdevice\\|/lib/lib/hipSYCL/bitcode\" $PREFIX/etc/AdaptiveCpp $PREFIX/lib/cmake/AdaptiveCpp"  # [linux]
     {% if cuda_compiler_version != "None" %}
     - test -f $PREFIX/lib/hipSYCL/librt-backend-cuda${SHLIB_EXT}  # [not win]
+    - test -f $PREFIX/nvvm/libdevice/libdevice.10.bc  # [linux and x86_64]
     {% endif %}
     - acpp-info  # [not win]
+    - cmake -S tests -B test-build -G Ninja  # [linux and x86_64 and cuda_compiler_version == "None"]
+    - cmake --build test-build  # [linux and x86_64 and cuda_compiler_version == "None"]
+    - ACPP_VISIBILITY_MASK=omp ./test-build/adaptivecpp-example  # [linux and x86_64 and cuda_compiler_version == "None"]
     - if not exist %PREFIX%\\Library\\include\\AdaptiveCpp\\SYCL\\sycl.hpp exit 1  # [win]
     - if not exist %PREFIX%\\Library\\lib\\cmake\\AdaptiveCpp\\adaptivecpp-config.cmake exit 1  # [win]
     - if not exist %PREFIX%\\Library\\lib\\acpp-common.lib exit 1  # [win]
@@ -104,6 +115,7 @@ test:
     - {{ compiler("c") }}
     - {{ compiler("cxx") }}
     - clangdev
+    - clangxx {{ llvm_version }}  # [linux]
     - cmake
     - ninja  # [unix]
   files:
