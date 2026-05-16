@@ -1,7 +1,7 @@
 About adaptivecpp-feedstock
 ===========================
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/adaptivecpp-feedstock-v1-audit-feedstock/blob/main/LICENSE.txt)
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/adaptivecpp-feedstock-v1-feedstock/blob/main/LICENSE.txt)
 
 Home: https://adaptivecpp.github.io/
 
@@ -18,7 +18,6 @@ hardware found in the system. This includes use cases where a single binary
 needs to be able to target all supported hardware, or utilize hardware from
 different vendors simultaneously.
 
-
 Current build status
 ====================
 
@@ -31,7 +30,7 @@ Current build status
       <details>
         <summary>
           <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main">
+            <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main">
           </a>
         </summary>
         <table>
@@ -40,231 +39,231 @@ Current build status
               <td>linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version16</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version16" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version16" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version17</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version17" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version17" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version18</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version18" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version18" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version19</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version19" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_version12.9llvm_version19" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version16</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version16" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version16" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version17</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version17" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version17" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version18</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version18" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version18" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version19</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version19" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version19" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version16</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version16" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version16" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version17</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version17" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version17" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version18</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version18" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version18" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version19</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version19" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_c_stdlib_version2.28cuda_compiler_version13.0llvm_version19" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version16</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version16" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version16" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version17</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version17" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version17" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version18</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version18" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version18" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version19</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version19" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_aarch64_c_stdlib_version2.17cuda_compiler_versionNonellvm_version19" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_ppc64le_llvm_version16</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version16" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version16" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_ppc64le_llvm_version17</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version17" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version17" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_ppc64le_llvm_version18</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version18" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version18" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>linux_ppc64le_llvm_version19</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version19" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_ppc64le_llvm_version19" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_llvm_version16</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_llvm_version16" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_llvm_version16" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_llvm_version17</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_llvm_version17" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_llvm_version17" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_llvm_version18</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_llvm_version18" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_llvm_version18" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>osx_arm64_llvm_version19</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_llvm_version19" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_llvm_version19" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_cuda_compiler_version12.9llvm_version16</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version12.9llvm_version16" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version12.9llvm_version16" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_cuda_compiler_version12.9llvm_version17</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version12.9llvm_version17" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version12.9llvm_version17" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_cuda_compiler_version12.9llvm_version18</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version12.9llvm_version18" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version12.9llvm_version18" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_cuda_compiler_version12.9llvm_version19</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version12.9llvm_version19" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_version12.9llvm_version19" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_cuda_compiler_versionNonellvm_version16</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_versionNonellvm_version16" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_versionNonellvm_version16" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_cuda_compiler_versionNonellvm_version17</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_versionNonellvm_version17" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_versionNonellvm_version17" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_cuda_compiler_versionNonellvm_version18</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_versionNonellvm_version18" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_versionNonellvm_version18" alt="variant">
                 </a>
               </td>
             </tr><tr>
               <td>win_64_cuda_compiler_versionNonellvm_version19</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_versionNonellvm_version19" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-feedstock?branchName=main&jobName=win&configuration=win%20win_64_cuda_compiler_versionNonellvm_version19" alt="variant">
                 </a>
               </td>
             </tr>
