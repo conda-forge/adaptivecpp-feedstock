@@ -177,17 +177,10 @@ Current build status
                 </a>
               </td>
             </tr><tr>
-              <td>osx_64_llvm_version18</td>
+              <td>osx_64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_llvm_version18" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_llvm_version19</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=None&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_llvm_version19" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/adaptivecpp-feedstock-v1-audit-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
                 </a>
               </td>
             </tr><tr>
