@@ -1,0 +1,251 @@
+schema_version: 1
+
+context:
+  name: AdaptiveCpp
+  version: "25.10.0"
+  build_number: 6
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  - url: https://github.com/AdaptiveCpp/AdaptiveCpp/archive/v${{ version }}.tar.gz
+    sha256: 334b16ebff373bd2841f83332c2ae9a45ec192f2cf964d5fdfe94e1140776059
+    patches:
+      - if: linux
+        then: patches/0001-Install-tool-binaries-to-the-same-folder-of-lib.patch
+      - if: linux
+        then: patches/0002-Fall-back-missing-functions.patch
+      - if: linux
+        then: patches/0003-Use-packaged-dependency-sources.patch
+  - if: linux and llvm_version == "16"
+    then:
+      url: https://github.com/AdaptiveCpp/SPIRV-LLVM-Translator/archive/d678e6a2a95849c9985c8d209f67b318999083c6.tar.gz
+      sha256: cabeb13932480edeb53e07797165b2a29ffe9fff82701504e6bb9b9e605c8e64
+      target_directory: acpp-spirv-llvm-translator
+  - if: linux and llvm_version == "17"
+    then:
+      url: https://github.com/AdaptiveCpp/SPIRV-LLVM-Translator/archive/21d3f7deabd85dcdebd207d8dc75958ab902e4a4.tar.gz
+      sha256: b227a5adb4590ba28dd5fa612b96f732847d4b5c6019b4fd94c7397f4ee7b1e9
+      target_directory: acpp-spirv-llvm-translator
+  - if: linux and llvm_version == "18"
+    then:
+      url: https://github.com/AdaptiveCpp/SPIRV-LLVM-Translator/archive/530c950568ce80137e1c0876d9afc403455a3cb6.tar.gz
+      sha256: 4d52536344fe0a4962380ab0316db7e5f35cd218d8fcbdf0c795a7eb57302574
+      target_directory: acpp-spirv-llvm-translator
+  - if: linux and llvm_version == "19"
+    then:
+      url: https://github.com/AdaptiveCpp/SPIRV-LLVM-Translator/archive/ed04cf4540ec8b1cda2921c3f2eabc72a9291465.tar.gz
+      sha256: 9098743b0b0e759b02e3e4e1efc1931f51bed87b89296dada072a0eedeb1a06a
+      target_directory: acpp-spirv-llvm-translator
+  - if: linux
+    then:
+      url: https://github.com/KhronosGroup/OpenCL-Headers/archive/265df85aec478d14a5c5880d7bb92d7dd52714ef.tar.gz
+      sha256: 07002bdb6107dfc8ab1736c3894ff7f1501029751960c0b2dd6157e43c0b9290
+      target_directory: opencl-headers
+  - if: linux
+    then:
+      url: https://github.com/KhronosGroup/OpenCL-CLHPP/archive/67d100e70612341707725b6648ccca4c10b0dc31.tar.gz
+      sha256: a6112af8ba2cc8a5248bcc7399624258cb9609b31ccd4a65222bf61893c2c618
+      target_directory: opencl-clhpp
+
+build:
+  number: ${{ build_number }}
+  string: ${{ "cuda" ~ (cuda_compiler_version | replace(".", "")) ~ "_llvm" ~ llvm_version ~ "_h" ~ hash ~ "_" ~ build_number if cuda_compiler_version != "None" else "cpu_llvm" ~ llvm_version ~ "_h" ~ hash ~ "_" ~ build_number }}
+  skip:
+    - win and cuda_compiler_version == "13.0"
+    - linux and aarch64 and cuda_compiler_version != "None"
+  script:
+    file: ${{ "build.bat" if win else "build.sh" }}
+  dynamic_linking:
+    missing_dso_allowlist:
+      - if: win
+        then: "*/nvcuda.dll"
+      - if: linux
+        then: "*/libcuda.so.1"
+
+requirements:
+  build:
+    - ${{ compiler("cxx") }}
+    - ${{ stdlib("c") }}
+    - cmake
+    - doxygen
+    - if: linux
+      then: make
+    - if: not win
+      then: ninja
+    - if: linux
+      then: pkgconfig
+    - if: cuda_compiler_version != "None"
+      then: ${{ compiler("cuda") }}
+    - if: cuda_compiler_version != "None" and build_platform != target_platform
+      then: cuda-cudart-dev
+  host:
+    - clangdev
+    - if: linux and x86_64
+      then: hipcc
+    - libboost-devel
+    - if: not win
+      then: lld ${{ llvm_version }}.*
+    - llvmdev ${{ llvm_version }}.*
+    - llvm-openmp ${{ llvm_version }}.*
+    - libopencl-devel
+    - if: linux and x86_64
+      then: rocm-device-libs
+    - if: linux
+      then: spirv-headers
+    # AdaptiveCpp builds its own SPIR-V translator fork from the source above.
+    # Keep SPIRV-Tools below 2026 while the Linux matrix uses LLVM 16-19.
+    - if: linux
+      then: spirv-tools <2026
+    # cuda-compat is needed for libcuda.so.1
+    - if: cuda_compiler_version != "None" and linux
+      then: cuda-compat
+    - if: cuda_compiler_version != "None"
+      then: cuda-cudart-dev
+    - if: cuda_compiler_version != "None" and linux
+      then: cuda-driver-dev
+    - if: cuda_compiler_version != "None" and linux and x86_64
+      then: cuda-nvvm-tools
+    - if: cuda_compiler_version != "None"
+      then: cuda-version ==${{ cuda_compiler_version }}
+  run:
+    - if: osx and x86_64
+      then: clangdev ${{ llvm_version }}.*
+    - if: osx and arm64
+      then: clangdev
+    # The acpp driver defaults to the clang++ installed by clangxx.
+    - if: linux
+      then: clangxx ${{ llvm_version }}.*
+    - if: linux and x86_64
+      then: hip-runtime-amd
+    - if: not win
+      then: lld ${{ llvm_version }}.*
+    - libllvm${{ llvm_version }}
+    - if: linux
+      then: libnuma
+    - llvm ${{ llvm_version }}.*
+    # The generic/OpenMP runtime JIT invokes opt/llc from the matching LLVM.
+    - if: not win
+      then: llvm-tools ${{ llvm_version }}.*
+    - if: osx
+      then: llvm-openmp ${{ llvm_version }}.*
+    - if: linux and x86_64
+      then: rocm-device-libs
+    - if: cuda_compiler_version != "None" and linux and x86_64
+      then: cuda-nvvm-tools
+  run_exports:
+    - ${{ pin_subpackage("adaptivecpp", upper_bound="x.x") }}
+  ignore_run_exports:
+    by_name:
+      - libboost
+      - llvm
+      - if: not win
+        then: llvm-openmp
+
+tests:
+  - files:
+      recipe:
+        - run_cmake_test.bat
+        - run_cmake_test.sh
+        - tests/
+    requirements:
+      run:
+        - ${{ compiler("c") }}
+        - ${{ compiler("cxx") }}
+        - if: not linux
+          then: clangdev
+        # Test-only CUDA headers let CI compile a CMake AdaptiveCpp CUDA target without a GPU.
+        - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
+          then: cuda-crt-dev_linux-64
+        - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
+          then: cuda-cudart-dev
+        - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
+          then: cuda-driver-dev
+        - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
+          then: libcurand-dev
+        - cmake
+        - if: unix
+          then: ninja
+    script:
+      - if: not win
+        then: test -f $PREFIX/include/AdaptiveCpp/sycl/sycl.hpp
+      - if: not win
+        then: test -f $PREFIX/lib/cmake/AdaptiveCpp/adaptivecpp-config.cmake
+      - if: not win
+        then: test -f $PREFIX/lib/libacpp-common${SHLIB_EXT}
+      - if: not win
+        then: test -f $PREFIX/lib/hipSYCL/librt-backend-omp${SHLIB_EXT}
+      - if: linux
+        then: test -f $PREFIX/lib/hipSYCL/librt-backend-ocl${SHLIB_EXT}
+      - if: linux and x86_64
+        then: test -f $PREFIX/lib/hipSYCL/librt-backend-hip${SHLIB_EXT}
+      - if: linux
+        then: test -f $PREFIX/lib/hipSYCL/bitcode/libkernel-sscp-host-full.bc
+      - if: linux
+        then: test ! -e $PREFIX/lib/lib/hipSYCL/bitcode/libkernel-sscp-host-full.bc
+      - if: linux
+        then: test -x $PREFIX/lib/hipSYCL/llvm-to-backend/llvm-to-spirv-tool
+      - if: osx and x86_64
+        then: test -x $PREFIX/bin/clang++
+      - if: osx and x86_64
+        then: '! grep -R "_build_env.*/.*clang" $PREFIX/etc/AdaptiveCpp/acpp-core.json'
+      - if: linux
+        then: test -x $PREFIX/bin/clang++-${{ llvm_version }} || test -x $PREFIX/bin/clang++
+      - if: linux
+        then: test -x $PREFIX/bin/opt-${{ llvm_version }} || test -x $PREFIX/bin/opt
+      - if: linux
+        then: test -x $PREFIX/bin/llc-${{ llvm_version }} || test -x $PREFIX/bin/llc
+      - if: linux
+        then: '! grep -R "_build_env.*/nvvm/libdevice\|/lib/lib/hipSYCL/bitcode" $PREFIX/etc/AdaptiveCpp $PREFIX/lib/cmake/AdaptiveCpp'
+      - if: cuda_compiler_version != "None" and not win
+        then: test -f $PREFIX/lib/hipSYCL/librt-backend-cuda${SHLIB_EXT}
+      - if: cuda_compiler_version != "None" and linux and x86_64
+        then: test -f $PREFIX/nvvm/libdevice/libdevice.10.bc
+      - if: not win
+        then: bash run_cmake_test.sh
+      - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
+        then: cmake -S tests/cmake-cuda-smoke -B test-build-cuda -G Ninja -DACPP_TARGETS=cuda:sm_80
+      - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
+        then: ACPP_CUDA_CXX_FLAGS="-I$PREFIX/targets/x86_64-linux/include -U__FLOAT128__ -U__SIZEOF_FLOAT128__ -isystem $PREFIX/include/AdaptiveCpp/hipSYCL/std/hiplike" ACPP_CUDA_LINK_LINE="-Wl,-rpath=$PREFIX/targets/x86_64-linux/lib -L$PREFIX/targets/x86_64-linux/lib -lcudart" cmake --build test-build-cuda
+      - if: not win
+        then: acpp-info
+      - if: linux and x86_64 and cuda_compiler_version == "None"
+        then: cmake -S tests -B test-build -G Ninja
+      - if: linux and x86_64 and cuda_compiler_version == "None"
+        then: cmake --build test-build
+      - if: linux and x86_64 and cuda_compiler_version == "None"
+        then: ACPP_VISIBILITY_MASK=omp ./test-build/adaptivecpp-example
+      - if: win
+        then:
+          - if not exist %PREFIX%\Library\include\AdaptiveCpp\SYCL\sycl.hpp exit 1
+          - if not exist %PREFIX%\Library\lib\cmake\AdaptiveCpp\adaptivecpp-config.cmake exit 1
+          - if not exist %PREFIX%\Library\lib\acpp-common.lib exit 1
+          - if not exist %PREFIX%\Library\bin\acpp-common.dll exit 1
+          - if not exist %PREFIX%\Library\lib\hipSYCL\rt-backend-omp.lib exit 1
+          - if not exist %PREFIX%\Library\bin\hipSYCL\rt-backend-omp.dll exit 1
+          - call run_cmake_test.bat
+          - acpp-info.exe
+      - if: cuda_compiler_version != "None" and win
+        then:
+          - if not exist %PREFIX%\Library\lib\hipSYCL\rt-backend-cuda.lib exit 1
+          - if not exist %PREFIX%\Library\bin\hipSYCL\rt-backend-cuda.dll exit 1
+
+about:
+  homepage: https://adaptivecpp.github.io/
+  summary: The independent, community-driven platform for heterogeneous programming in C++
+  description: |
+    AdaptiveCpp is the independent, community-driven modern platform for
+    C++-based heterogeneous programming models targeting CPUs and GPUs from all
+    major vendors. AdaptiveCpp lets applications adapt themselves to all the
+    hardware found in the system. This includes use cases where a single binary
+    needs to be able to target all supported hardware, or utilize hardware from
+    different vendors simultaneously.
+  license: BSD-2-Clause
+  license_file: LICENSE
+  repository: https://github.com/AdaptiveCpp/AdaptiveCpp
+
+extra:
+  recipe-maintainers:
+    - jeongseok-meta
