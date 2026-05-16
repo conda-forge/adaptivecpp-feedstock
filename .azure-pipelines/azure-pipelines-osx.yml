@@ -8,6 +8,16 @@ jobs:
     vmImage: $(VMIMAGE)
   strategy:
     matrix:
+      osx_64_llvm_version18:
+        CONFIG: osx_64_llvm_version18
+        UPLOAD_PACKAGES: 'True'
+        VMIMAGE: macOS-15
+        store_build_artifacts: false
+      osx_64_llvm_version19:
+        CONFIG: osx_64_llvm_version19
+        UPLOAD_PACKAGES: 'True'
+        VMIMAGE: macOS-15
+        store_build_artifacts: false
       osx_arm64_llvm_version16:
         CONFIG: osx_arm64_llvm_version16
         UPLOAD_PACKAGES: 'True'
