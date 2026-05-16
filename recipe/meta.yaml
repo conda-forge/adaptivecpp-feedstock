@@ -46,7 +46,6 @@ build:
     # https://conda-forge.org/docs/maintainer/knowledge_base/#nvcudadll-cannot-be-found-on-windows
     - "*/nvcuda.dll"    # [win]
     - "*/libcuda.so.1"  # [linux]
-  skip: true  # [osx and x86_64]
   skip: true  # [win and cuda_compiler_version == "13.0"]
   skip: true  # [linux and aarch64 and cuda_compiler_version != "None"]
   string: cpu_llvm{{ llvm_version }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
