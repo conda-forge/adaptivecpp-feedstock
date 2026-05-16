@@ -4,5 +4,5 @@ c_stdlib_version:  # [osx and x86_64]
 llvm_version:
   - 16  # [not (osx and x86_64)]
   - 17  # [not (osx and x86_64)]
-  - 18
+  - 18  # [not (osx and x86_64)]
   - 19

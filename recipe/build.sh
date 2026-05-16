@@ -75,3 +75,11 @@ cmake \
 cmake --build build --parallel
 
 cmake --install build --strip
+
+if [[ "${target_platform}" == "osx-64" ]]; then
+  # Avoid recording the ephemeral build-env compiler in the new native macOS package.
+  sed -i.bak -E \
+    "s#\"default-cpu-cxx\"[[:space:]]*:[[:space:]]*\"[^\"]*\"#\"default-cpu-cxx\"   : \"${PREFIX}/bin/clang++\"#" \
+    "${PREFIX}/etc/AdaptiveCpp/acpp-core.json"
+  rm -f "${PREFIX}/etc/AdaptiveCpp/acpp-core.json.bak"
+fi
