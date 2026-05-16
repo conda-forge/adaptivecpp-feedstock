@@ -46,7 +46,6 @@ build:
     # https://conda-forge.org/docs/maintainer/knowledge_base/#nvcudadll-cannot-be-found-on-windows
     - "*/nvcuda.dll"    # [win]
     - "*/libcuda.so.1"  # [linux]
-  skip: true  # [osx and x86_64]
   skip: true  # [win and cuda_compiler_version == "13.0"]
   skip: true  # [linux and aarch64 and cuda_compiler_version != "None"]
   string: cpu_llvm{{ llvm_version }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == "None"]
@@ -87,7 +86,8 @@ requirements:
     - cuda-version {{ cuda_compiler_version }}
     {% endif %}
   run:
-    - clangdev  # [osx]
+    - clangdev {{ llvm_version }}  # [osx and x86_64]
+    - clangdev  # [osx and arm64]
     # The acpp driver defaults to the clang++ installed by clangxx.
     - clangxx {{ llvm_version }}  # [linux]
     - hip-runtime-amd  # [linux and x86_64]
@@ -114,6 +114,8 @@ test:
     - test -f $PREFIX/lib/hipSYCL/bitcode/libkernel-sscp-host-full.bc  # [linux]
     - test ! -e $PREFIX/lib/lib/hipSYCL/bitcode/libkernel-sscp-host-full.bc  # [linux]
     - test -x $PREFIX/lib/hipSYCL/llvm-to-backend/llvm-to-spirv-tool  # [linux]
+    - test -x $PREFIX/bin/clang++  # [osx and x86_64]
+    - "! grep -R \"_build_env.*/.*clang\" $PREFIX/etc/AdaptiveCpp/acpp-core.json"  # [osx and x86_64]
     - "test -x $PREFIX/bin/clang++-{{ llvm_version }} || test -x $PREFIX/bin/clang++"  # [linux]
     - "test -x $PREFIX/bin/opt-{{ llvm_version }} || test -x $PREFIX/bin/opt"  # [linux]
     - "test -x $PREFIX/bin/llc-{{ llvm_version }} || test -x $PREFIX/bin/llc"  # [linux]
