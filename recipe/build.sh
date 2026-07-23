@@ -45,7 +45,7 @@ if [[ "${with_rocm_backend}" == ON ]]; then
   cmake_extra_args+=("-DROCM_DEVICE_LIBS_PATH=${PREFIX}/lib/amdgcn/bitcode")
 fi
 
-if [[ "${with_cuda_backend}" == ON && "${target_platform}" == linux-64 ]]; then
+if [[ "${with_cuda_backend}" == ON && "${target_platform}" == linux-* ]]; then
   cmake_extra_args+=("-DCUDA_DEVICE_LIBS_PATH=${PREFIX}/nvvm/libdevice")
   # Link the nvvm device path to the default lookup location of acpp
   mkdir -p "${PREFIX}/lib/hipSYCL/ext/bitcode/ptx"

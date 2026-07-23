@@ -55,7 +55,6 @@ build:
   string: ${{ "cuda" ~ (cuda_compiler_version | replace(".", "")) ~ "_llvm" ~ llvm_version ~ "_h" ~ hash ~ "_" ~ build_number if cuda_compiler_version != "None" else "cpu_llvm" ~ llvm_version ~ "_h" ~ hash ~ "_" ~ build_number }}
   skip:
     - win and cuda_compiler_version == "13.0"
-    - linux and aarch64 and cuda_compiler_version != "None"
   script:
     file: ${{ "build.bat" if win else "build.sh" }}
   dynamic_linking:
@@ -106,7 +105,7 @@ requirements:
       then: cuda-cudart-dev
     - if: cuda_compiler_version != "None" and linux
       then: cuda-driver-dev
-    - if: cuda_compiler_version != "None" and linux and x86_64
+    - if: cuda_compiler_version != "None" and linux
       then: cuda-nvvm-tools
     - if: cuda_compiler_version != "None"
       then: cuda-version ==${{ cuda_compiler_version }}
@@ -133,7 +132,7 @@ requirements:
       then: llvm-openmp ${{ llvm_version }}.*
     - if: linux and x86_64
       then: rocm-device-libs
-    - if: cuda_compiler_version != "None" and linux and x86_64
+    - if: cuda_compiler_version != "None" and linux
       then: cuda-nvvm-tools
   run_exports:
     - ${{ pin_subpackage("adaptivecpp", upper_bound="x.x") }}
@@ -203,7 +202,7 @@ tests:
         then: '! grep -R "_build_env.*/nvvm/libdevice\|/lib/lib/hipSYCL/bitcode" $PREFIX/etc/AdaptiveCpp $PREFIX/lib/cmake/AdaptiveCpp'
       - if: cuda_compiler_version != "None" and not win
         then: test -f $PREFIX/lib/hipSYCL/librt-backend-cuda${SHLIB_EXT}
-      - if: cuda_compiler_version != "None" and linux and x86_64
+      - if: cuda_compiler_version != "None" and linux
         then: test -f $PREFIX/nvvm/libdevice/libdevice.10.bc
       - if: cuda_compiler_version != "None" and linux and x86_64
         then: test -L $PREFIX/lib/hipSYCL/ext/bitcode/ptx/libdevice.10.bc
