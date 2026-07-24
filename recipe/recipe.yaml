@@ -19,6 +19,8 @@ source:
         then: patches/0002-Fall-back-missing-functions.patch
       - if: linux
         then: patches/0003-Use-packaged-dependency-sources.patch
+      - if: linux
+        then: patches/0004-Cross-compile-native-bitcode-tools.patch
   - if: linux and llvm_version == "16"
     then:
       url: https://github.com/AdaptiveCpp/SPIRV-LLVM-Translator/archive/d678e6a2a95849c9985c8d209f67b318999083c6.tar.gz
@@ -80,6 +82,12 @@ requirements:
       then: ${{ compiler("cuda") }}
     - if: cuda_compiler_version != "None" and build_platform != target_platform
       then: cuda-cudart-dev
+    # Cross builds compile the device bitcode with build-native clang/llvm-link
+    # (see ACPP_BITCODE_* in build.sh).
+    - if: build_platform != target_platform and linux
+      then: clangdev ${{ llvm_version }}.*
+    - if: build_platform != target_platform and linux
+      then: llvm-tools ${{ llvm_version }}.*
   host:
     - clangdev
     - if: linux and x86_64

@@ -32,6 +32,11 @@ if [[ "${target_platform}" == linux* ]]; then
 
   if [[ "${target_platform}" != "${build_platform}" ]]; then
     cmake_extra_args+=("-DACPP_HOST_FORCE_MCPU_TARGET=generic")
+    # Cross build: device libkernel bitcode is target-independent but is
+    # compiled/linked on the build host, so use build-native clang/llvm-link.
+    # CLANG_EXECUTABLE_PATH stays on the target toolchain for the runtime config.
+    cmake_extra_args+=("-DACPP_BITCODE_CLANG=${BUILD_PREFIX}/bin/clang++-${llvm_version}")
+    cmake_extra_args+=("-DACPP_BITCODE_LLVM_LINK=${BUILD_PREFIX}/bin/llvm-link")
   fi
 
   test -f "${PREFIX}/include/spirv/unified1/spirv.hpp"
