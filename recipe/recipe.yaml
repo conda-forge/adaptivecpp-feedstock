@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: AdaptiveCpp
   version: "25.10.0"
-  build_number: 6
+  build_number: 7
 
 package:
   name: ${{ name|lower }}
@@ -205,6 +205,10 @@ tests:
         then: test -f $PREFIX/lib/hipSYCL/librt-backend-cuda${SHLIB_EXT}
       - if: cuda_compiler_version != "None" and linux and x86_64
         then: test -f $PREFIX/nvvm/libdevice/libdevice.10.bc
+      - if: cuda_compiler_version != "None" and linux and x86_64
+        then: test -L $PREFIX/lib/hipSYCL/ext/bitcode/ptx/libdevice.10.bc
+      - if: cuda_compiler_version != "None" and linux and x86_64
+        then: test -f $PREFIX/lib/hipSYCL/ext/bitcode/ptx/libdevice.10.bc
       - if: not win
         then: bash run_cmake_test.sh
       - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"

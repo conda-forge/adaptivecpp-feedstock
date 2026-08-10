@@ -47,6 +47,10 @@ fi
 
 if [[ "${with_cuda_backend}" == ON && "${target_platform}" == linux-64 ]]; then
   cmake_extra_args+=("-DCUDA_DEVICE_LIBS_PATH=${PREFIX}/nvvm/libdevice")
+  # Link the nvvm device path to the default lookup location of acpp
+  mkdir -p "${PREFIX}/lib/hipSYCL/ext/bitcode/ptx"
+  ln -sf ../../../../../nvvm/libdevice/libdevice.10.bc \
+    "${PREFIX}/lib/hipSYCL/ext/bitcode/ptx/libdevice.10.bc"
 fi
 
 # Workaround for GCC 14 on AArch64 expanding __arm_* keyword-attributes to [[arm::...]]
