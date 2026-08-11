@@ -35,7 +35,12 @@ if [[ "${target_platform}" == linux* ]]; then
     # Cross build: device libkernel bitcode is target-independent but is
     # compiled/linked on the build host, so use build-native clang/llvm-link.
     # CLANG_EXECUTABLE_PATH stays on the target toolchain for the runtime config.
-    cmake_extra_args+=("-DACPP_BITCODE_CLANG=${BUILD_PREFIX}/bin/clang++-${llvm_version}")
+    bitcode_clang="${BUILD_PREFIX}/bin/clang++-${llvm_version}"
+    if [[ ! -x "${bitcode_clang}" ]]; then
+      bitcode_clang="${BUILD_PREFIX}/bin/clang++"
+    fi
+    test -x "${bitcode_clang}"
+    cmake_extra_args+=("-DACPP_BITCODE_CLANG=${bitcode_clang}")
     cmake_extra_args+=("-DACPP_BITCODE_LLVM_LINK=${BUILD_PREFIX}/bin/llvm-link")
   fi
 
