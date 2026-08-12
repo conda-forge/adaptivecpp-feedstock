@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: AdaptiveCpp
   version: "25.10.0"
-  build_number: 7
+  build_number: 8
 
 package:
   name: ${{ name|lower }}
@@ -260,5 +260,6 @@ about:
   repository: https://github.com/AdaptiveCpp/AdaptiveCpp
 
 extra:
+  feedstock-name: adaptivecpp
   recipe-maintainers:
     - jeongseok-meta
