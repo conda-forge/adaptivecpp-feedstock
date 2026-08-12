@@ -57,6 +57,15 @@ fi
 
 if [[ "${with_cuda_backend}" == ON && "${target_platform}" == linux-* ]]; then
   cmake_extra_args+=("-DCUDA_DEVICE_LIBS_PATH=${PREFIX}/nvvm/libdevice")
+
+  # Conda keeps CUDA headers and libraries in a target-specific directory.
+  cuda_targets=("${PREFIX}"/targets/*-linux)
+  test ${#cuda_targets[@]} -eq 1
+  test -f "${cuda_targets[0]}/include/cuda.h"
+  cuda_target=${cuda_targets[0]#"${PREFIX}/"}
+  # This includes upstream default flags due to overwriting the original set
+  cmake_extra_args+=("-DCUDA_CXX_FLAGS=-I\$ACPP_PATH/${cuda_target}/include -U__FLOAT128__ -U__SIZEOF_FLOAT128__ -isystem \$ACPP_PATH/include/AdaptiveCpp/hipSYCL/std/hiplike")
+
   # Link the nvvm device path to the default lookup location of acpp
   mkdir -p "${PREFIX}/lib/hipSYCL/ext/bitcode/ptx"
   ln -sf ../../../../../nvvm/libdevice/libdevice.10.bc \
