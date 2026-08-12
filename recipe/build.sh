@@ -65,6 +65,7 @@ if [[ "${with_cuda_backend}" == ON && "${target_platform}" == linux-* ]]; then
   cuda_target=${cuda_targets[0]#"${PREFIX}/"}
   # This includes upstream default flags due to overwriting the original set
   cmake_extra_args+=("-DCUDA_CXX_FLAGS=-I\$ACPP_PATH/${cuda_target}/include -U__FLOAT128__ -U__SIZEOF_FLOAT128__ -isystem \$ACPP_PATH/include/AdaptiveCpp/hipSYCL/std/hiplike")
+  cmake_extra_args+=("-DCUDA_LINK_LINE=-Wl,-rpath=\$ACPP_PATH/${cuda_target}/lib -L\$ACPP_PATH/${cuda_target}/lib -lcudart")
 
   # Link the nvvm device path to the default lookup location of acpp
   mkdir -p "${PREFIX}/lib/hipSYCL/ext/bitcode/ptx"
