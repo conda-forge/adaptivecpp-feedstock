@@ -10,6 +10,13 @@ fi
 
 if [[ "${target_platform}" == linux* ]]; then
   with_opencl_backend=ON
+
+  # LLVM 16-18's SmallVector.h relies on a transitive <cstdint> include that
+  # GCC 15 no longer provides. Force it in for AdaptiveCpp and the bundled
+  # SPIR-V translator; without this, uint32_t/uint64_t are undefined.
+  if [[ "${llvm_version}" -le 18 ]]; then
+    export CXXFLAGS="${CXXFLAGS} -include cstdint"
+  fi
 else
   with_opencl_backend=OFF
 fi
