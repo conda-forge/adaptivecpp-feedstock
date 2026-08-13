@@ -104,9 +104,10 @@ requirements:
       then: rocm-device-libs
     - if: linux
       then: spirv-headers
-    # AdaptiveCpp builds its own SPIR-V translator fork from the source above.
+    # The bundled translator links to SPIRV-Tools; use conda-forge's global pin
+    # and the package's run export to keep the runtime ABI compatible.
     - if: linux
-      then: spirv-tools >=2026,<2027
+      then: spirv-tools
     # cuda-compat is needed for libcuda.so.1
     - if: cuda_compiler_version != "None" and linux
       then: cuda-compat

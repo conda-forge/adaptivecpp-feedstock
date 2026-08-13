@@ -22,6 +22,8 @@ libboost_devel:
 - '1.90'
 llvm_version:
 - '17'
+spirv_tools:
+- '2026'
 target_platform:
 - linux-ppc64le
 zip_keys:
