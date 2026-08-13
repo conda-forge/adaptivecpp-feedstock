@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: AdaptiveCpp
   version: "25.10.0"
-  build_number: 7
+  build_number: 8
 
 package:
   name: ${{ name|lower }}
@@ -19,6 +19,10 @@ source:
         then: patches/0002-Fall-back-missing-functions.patch
       - if: linux
         then: patches/0003-Use-packaged-dependency-sources.patch
+      # Drop this downstream patch once AdaptiveCpp/AdaptiveCpp#2185 is merged
+      # and the packaged AdaptiveCpp release includes the fix.
+      - if: linux
+        then: patches/0004-Cross-compile-native-bitcode-tools.patch
   - if: linux and llvm_version == "16"
     then:
       url: https://github.com/AdaptiveCpp/SPIRV-LLVM-Translator/archive/d678e6a2a95849c9985c8d209f67b318999083c6.tar.gz
@@ -55,7 +59,6 @@ build:
   string: ${{ "cuda" ~ (cuda_compiler_version | replace(".", "")) ~ "_llvm" ~ llvm_version ~ "_h" ~ hash ~ "_" ~ build_number if cuda_compiler_version != "None" else "cpu_llvm" ~ llvm_version ~ "_h" ~ hash ~ "_" ~ build_number }}
   skip:
     - win and cuda_compiler_version == "13.0"
-    - linux and aarch64 and cuda_compiler_version != "None"
   script:
     file: ${{ "build.bat" if win else "build.sh" }}
   dynamic_linking:
@@ -81,6 +84,12 @@ requirements:
       then: ${{ compiler("cuda") }}
     - if: cuda_compiler_version != "None" and build_platform != target_platform
       then: cuda-cudart-dev
+    # Cross builds compile the device bitcode with build-native clang/llvm-link
+    # (see ACPP_BITCODE_* in build.sh).
+    - if: build_platform != target_platform and linux
+      then: clangdev ${{ llvm_version }}.*
+    - if: build_platform != target_platform and linux
+      then: llvm-tools ${{ llvm_version }}.*
   host:
     - clangdev
     - if: linux and x86_64
@@ -106,7 +115,7 @@ requirements:
       then: cuda-cudart-dev
     - if: cuda_compiler_version != "None" and linux
       then: cuda-driver-dev
-    - if: cuda_compiler_version != "None" and linux and x86_64
+    - if: cuda_compiler_version != "None" and linux
       then: cuda-nvvm-tools
     - if: cuda_compiler_version != "None"
       then: cuda-version ==${{ cuda_compiler_version }}
@@ -133,7 +142,7 @@ requirements:
       then: llvm-openmp ${{ llvm_version }}.*
     - if: linux and x86_64
       then: rocm-device-libs
-    - if: cuda_compiler_version != "None" and linux and x86_64
+    - if: cuda_compiler_version != "None" and linux
       then: cuda-nvvm-tools
   run_exports:
     - ${{ pin_subpackage("adaptivecpp", upper_bound="x.x") }}
@@ -157,15 +166,15 @@ tests:
         - if: not linux
           then: clangdev
         # Test-only CUDA headers let CI compile a CMake AdaptiveCpp CUDA target without a GPU.
-        - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
-          then: cuda-crt-dev_linux-64
-        - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
+        - if: linux and cuda_compiler_version == "12.9" and llvm_version == "19"
+          then: cuda-crt
+        - if: linux and cuda_compiler_version == "12.9" and llvm_version == "19"
           then: cuda-cudart-dev
-        - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
+        - if: linux and cuda_compiler_version == "12.9" and llvm_version == "19"
           then: cuda-driver-dev
-        - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
+        - if: linux and cuda_compiler_version == "12.9" and llvm_version == "19"
           then: cuda-nvcc-tools
-        - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
+        - if: linux and cuda_compiler_version == "12.9" and llvm_version == "19"
           then: libcurand-dev
         - cmake
         - if: unix
@@ -203,18 +212,18 @@ tests:
         then: '! grep -R "_build_env.*/nvvm/libdevice\|/lib/lib/hipSYCL/bitcode" $PREFIX/etc/AdaptiveCpp $PREFIX/lib/cmake/AdaptiveCpp'
       - if: cuda_compiler_version != "None" and not win
         then: test -f $PREFIX/lib/hipSYCL/librt-backend-cuda${SHLIB_EXT}
-      - if: cuda_compiler_version != "None" and linux and x86_64
+      - if: cuda_compiler_version != "None" and linux
         then: test -f $PREFIX/nvvm/libdevice/libdevice.10.bc
-      - if: cuda_compiler_version != "None" and linux and x86_64
+      - if: cuda_compiler_version != "None" and linux
         then: test -L $PREFIX/lib/hipSYCL/ext/bitcode/ptx/libdevice.10.bc
-      - if: cuda_compiler_version != "None" and linux and x86_64
+      - if: cuda_compiler_version != "None" and linux
         then: test -f $PREFIX/lib/hipSYCL/ext/bitcode/ptx/libdevice.10.bc
       - if: not win
         then: bash run_cmake_test.sh
-      - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
+      - if: linux and cuda_compiler_version == "12.9" and llvm_version == "19"
         then: cmake -S tests/cmake-cuda-smoke -B test-build-cuda -G Ninja -DACPP_TARGETS=cuda:sm_80
-      - if: linux and x86_64 and cuda_compiler_version == "12.9" and llvm_version == "19"
-        then: ACPP_CUDA_CXX_FLAGS="-I$PREFIX/targets/x86_64-linux/include -U__FLOAT128__ -U__SIZEOF_FLOAT128__ -isystem $PREFIX/include/AdaptiveCpp/hipSYCL/std/hiplike" ACPP_CUDA_LINK_LINE="-Wl,-rpath=$PREFIX/targets/x86_64-linux/lib -L$PREFIX/targets/x86_64-linux/lib -lcudart" cmake --build test-build-cuda
+      - if: linux and cuda_compiler_version == "12.9" and llvm_version == "19"
+        then: cmake --build test-build-cuda
       - if: not win
         then: acpp-info
       - if: linux and x86_64 and cuda_compiler_version == "None"
@@ -253,5 +262,6 @@ about:
   repository: https://github.com/AdaptiveCpp/AdaptiveCpp
 
 extra:
+  feedstock-name: adaptivecpp
   recipe-maintainers:
     - jeongseok-meta

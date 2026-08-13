@@ -32,6 +32,16 @@ if [[ "${target_platform}" == linux* ]]; then
 
   if [[ "${target_platform}" != "${build_platform}" ]]; then
     cmake_extra_args+=("-DACPP_HOST_FORCE_MCPU_TARGET=generic")
+    # Cross build: device libkernel bitcode is target-independent but is
+    # compiled/linked on the build host, so use build-native clang/llvm-link.
+    # CLANG_EXECUTABLE_PATH stays on the target toolchain for the runtime config.
+    bitcode_clang="${BUILD_PREFIX}/bin/clang++-${llvm_version}"
+    if [[ ! -x "${bitcode_clang}" ]]; then
+      bitcode_clang="${BUILD_PREFIX}/bin/clang++"
+    fi
+    test -x "${bitcode_clang}"
+    cmake_extra_args+=("-DACPP_BITCODE_CLANG=${bitcode_clang}")
+    cmake_extra_args+=("-DACPP_BITCODE_LLVM_LINK=${BUILD_PREFIX}/bin/llvm-link")
   fi
 
   test -f "${PREFIX}/include/spirv/unified1/spirv.hpp"
@@ -45,8 +55,18 @@ if [[ "${with_rocm_backend}" == ON ]]; then
   cmake_extra_args+=("-DROCM_DEVICE_LIBS_PATH=${PREFIX}/lib/amdgcn/bitcode")
 fi
 
-if [[ "${with_cuda_backend}" == ON && "${target_platform}" == linux-64 ]]; then
+if [[ "${with_cuda_backend}" == ON && "${target_platform}" == linux-* ]]; then
   cmake_extra_args+=("-DCUDA_DEVICE_LIBS_PATH=${PREFIX}/nvvm/libdevice")
+
+  # Conda keeps CUDA headers and libraries in a target-specific directory.
+  cuda_targets=("${PREFIX}"/targets/*-linux)
+  test ${#cuda_targets[@]} -eq 1
+  test -f "${cuda_targets[0]}/include/cuda.h"
+  cuda_target=${cuda_targets[0]#"${PREFIX}/"}
+  # This includes upstream default flags due to overwriting the original set
+  cmake_extra_args+=("-DCUDA_CXX_FLAGS=-I\$ACPP_PATH/${cuda_target}/include -U__FLOAT128__ -U__SIZEOF_FLOAT128__ -isystem \$ACPP_PATH/include/AdaptiveCpp/hipSYCL/std/hiplike")
+  cmake_extra_args+=("-DCUDA_LINK_LINE=-Wl,-rpath=\$ACPP_PATH/${cuda_target}/lib -L\$ACPP_PATH/${cuda_target}/lib -lcudart")
+
   # Link the nvvm device path to the default lookup location of acpp
   mkdir -p "${PREFIX}/lib/hipSYCL/ext/bitcode/ptx"
   ln -sf ../../../../../nvvm/libdevice/libdevice.10.bc \
