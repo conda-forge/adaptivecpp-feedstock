@@ -10,6 +10,13 @@ fi
 
 if [[ "${target_platform}" == linux* ]]; then
   with_opencl_backend=ON
+
+  # LLVM 16-18's SmallVector.h relies on a transitive <cstdint> include that
+  # GCC 15 no longer provides. Force it in for AdaptiveCpp and the bundled
+  # SPIR-V translator; without this, uint32_t/uint64_t are undefined.
+  if [[ "${llvm_version}" -le 18 ]]; then
+    export CXXFLAGS="${CXXFLAGS} -include cstdint"
+  fi
 else
   with_opencl_backend=OFF
 fi
@@ -97,6 +104,14 @@ cmake \
   "${cmake_extra_args[@]}"
 
 cmake --build build --parallel
+
+# AdaptiveCpp's install(CODE) invokes this target from the wrong working
+# directory, and ignores the resulting failure. Install the matching patched
+# translator explicitly at the path used by the runtime JIT.
+if [[ "${target_platform}" == linux* ]]; then
+  cmake --build build --target InstallLLVMSpirvTranslator
+  test -x "${PREFIX}/lib/hipSYCL/ext/llvm-spirv/bin/llvm-spirv"
+fi
 
 cmake --install build --strip
 

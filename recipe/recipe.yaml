@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: AdaptiveCpp
   version: "25.10.0"
-  build_number: 8
+  build_number: 9
 
 package:
   name: ${{ name|lower }}
@@ -104,10 +104,10 @@ requirements:
       then: rocm-device-libs
     - if: linux
       then: spirv-headers
-    # AdaptiveCpp builds its own SPIR-V translator fork from the source above.
-    # Keep SPIRV-Tools below 2026 while the Linux matrix uses LLVM 16-19.
+    # The bundled translator links to SPIRV-Tools; use conda-forge's global pin
+    # and the package's run export to keep the runtime ABI compatible.
     - if: linux
-      then: spirv-tools <2026
+      then: spirv-tools
     # cuda-compat is needed for libcuda.so.1
     - if: cuda_compiler_version != "None" and linux
       then: cuda-compat
@@ -198,6 +198,10 @@ tests:
         then: test ! -e $PREFIX/lib/lib/hipSYCL/bitcode/libkernel-sscp-host-full.bc
       - if: linux
         then: test -x $PREFIX/lib/hipSYCL/llvm-to-backend/llvm-to-spirv-tool
+      - if: linux
+        then: test -x $PREFIX/lib/hipSYCL/ext/llvm-spirv/bin/llvm-spirv
+      - if: linux
+        then: $PREFIX/lib/hipSYCL/ext/llvm-spirv/bin/llvm-spirv --version
       - if: osx and x86_64
         then: test -x $PREFIX/bin/clang++
       - if: osx and x86_64
