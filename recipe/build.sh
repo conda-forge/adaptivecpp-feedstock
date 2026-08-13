@@ -78,6 +78,14 @@ cmake \
 
 cmake --build build --parallel
 
+# AdaptiveCpp's install(CODE) invokes this target from the wrong working
+# directory, and ignores the resulting failure. Install the matching patched
+# translator explicitly at the path used by the runtime JIT.
+if [[ "${target_platform}" == linux* ]]; then
+  cmake --build build --target InstallLLVMSpirvTranslator
+  test -x "${PREFIX}/lib/hipSYCL/ext/llvm-spirv/bin/llvm-spirv"
+fi
+
 cmake --install build --strip
 
 if [[ "${target_platform}" == "osx-64" ]]; then
