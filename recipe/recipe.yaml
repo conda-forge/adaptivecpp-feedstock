@@ -13,16 +13,24 @@ source:
   - url: https://github.com/AdaptiveCpp/AdaptiveCpp/archive/v${{ version }}.tar.gz
     sha256: 334b16ebff373bd2841f83332c2ae9a45ec192f2cf964d5fdfe94e1140776059
     patches:
+      # Drop once upstream installs the llvm-to-backend tools next to their
+      # libraries, or gives the upstream bin/ layout a working relocatable RPATH.
       - if: linux
         then: patches/0001-Install-tool-binaries-to-the-same-folder-of-lib.patch
+      # Drop once the packaged release includes AdaptiveCpp/AdaptiveCpp#1956.
       - if: linux
         then: patches/0002-Fall-back-missing-functions.patch
+      # Drop once upstream supports an offline external OpenCL header setup and
+      # an externally supplied AdaptiveCpp SPIR-V translator source (see
+      # AdaptiveCpp/AdaptiveCpp#1611).
       - if: linux
         then: patches/0003-Use-packaged-dependency-sources.patch
       # Drop this downstream patch once AdaptiveCpp/AdaptiveCpp#2185 is merged
       # and the packaged AdaptiveCpp release includes the fix.
       - if: linux
         then: patches/0004-Cross-compile-native-bitcode-tools.patch
+  # AdaptiveCpp's translator fork has required address-space handling from
+  # AdaptiveCpp/AdaptiveCpp#1825; conda-forge's llvm-spirv is not interchangeable.
   - if: linux and llvm_version == "16"
     then:
       url: https://github.com/AdaptiveCpp/SPIRV-LLVM-Translator/archive/d678e6a2a95849c9985c8d209f67b318999083c6.tar.gz
@@ -43,11 +51,7 @@ source:
       url: https://github.com/AdaptiveCpp/SPIRV-LLVM-Translator/archive/ed04cf4540ec8b1cda2921c3f2eabc72a9291465.tar.gz
       sha256: 9098743b0b0e759b02e3e4e1efc1931f51bed87b89296dada072a0eedeb1a06a
       target_directory: acpp-spirv-llvm-translator
-  - if: linux
-    then:
-      url: https://github.com/KhronosGroup/OpenCL-Headers/archive/265df85aec478d14a5c5880d7bb92d7dd52714ef.tar.gz
-      sha256: 07002bdb6107dfc8ab1736c3894ff7f1501029751960c0b2dd6157e43c0b9290
-      target_directory: opencl-headers
+  # OpenCL-CLHPP is not packaged by conda-forge, so provide its source offline.
   - if: linux
     then:
       url: https://github.com/KhronosGroup/OpenCL-CLHPP/archive/67d100e70612341707725b6648ccca4c10b0dc31.tar.gz
