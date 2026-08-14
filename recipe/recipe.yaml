@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: AdaptiveCpp
   version: "25.10.0"
-  build_number: 9
+  build_number: 10
 
 package:
   name: ${{ name|lower }}
@@ -73,13 +73,8 @@ requirements:
     - ${{ compiler("cxx") }}
     - ${{ stdlib("c") }}
     - cmake
-    - doxygen
-    - if: linux
-      then: make
     - if: not win
       then: ninja
-    - if: linux
-      then: pkgconfig
     - if: cuda_compiler_version != "None"
       then: ${{ compiler("cuda") }}
     - if: cuda_compiler_version != "None" and build_platform != target_platform
@@ -94,12 +89,15 @@ requirements:
     - clangdev
     - if: linux and x86_64
       then: hipcc
-    - libboost-devel
     - if: not win
       then: lld ${{ llvm_version }}.*
     - llvmdev ${{ llvm_version }}.*
     - llvm-openmp ${{ llvm_version }}.*
-    - libopencl-devel
+    # AdaptiveCpp enables NUMA support when the headers and library are present.
+    - if: linux
+      then: libnuma
+    - if: linux
+      then: libopencl-devel
     - if: linux and x86_64
       then: rocm-device-libs
     - if: linux
@@ -148,7 +146,6 @@ requirements:
     - ${{ pin_subpackage("adaptivecpp", upper_bound="x.x") }}
   ignore_run_exports:
     by_name:
-      - libboost
       - llvm
       - if: not win
         then: llvm-openmp
