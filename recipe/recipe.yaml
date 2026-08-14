@@ -79,6 +79,8 @@ requirements:
     - cmake
     - if: not win
       then: ninja
+    - if: linux
+      then: pkg-config
     - if: cuda_compiler_version != "None"
       then: ${{ compiler("cuda") }}
     - if: cuda_compiler_version != "None" and build_platform != target_platform
@@ -134,8 +136,6 @@ requirements:
     - if: not win
       then: lld ${{ llvm_version }}.*
     - libllvm${{ llvm_version }}
-    - if: linux
-      then: libnuma
     - llvm ${{ llvm_version }}.*
     # The generic/OpenMP runtime JIT invokes opt/llc from the matching LLVM.
     - if: not win
