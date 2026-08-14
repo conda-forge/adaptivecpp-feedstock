@@ -12,8 +12,6 @@ cuda_compiler_version:
 - None
 cxx_compiler:
 - vs2022
-libboost_devel:
-- '1.90'
 llvm_version:
 - '19'
 target_platform:
