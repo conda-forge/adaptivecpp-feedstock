@@ -43,10 +43,10 @@ index 98066dd..c595783 100644
        INSTALL_COMMAND ""
      )
 diff --git a/src/runtime/CMakeLists.txt b/src/runtime/CMakeLists.txt
-index 9970a93..eae317d 100644
+index 9970a93..fcb4a08 100644
 --- a/src/runtime/CMakeLists.txt
 +++ b/src/runtime/CMakeLists.txt
-@@ -237,25 +237,35 @@ if(WITH_LEVEL_ZERO_BACKEND)
+@@ -237,25 +237,39 @@ if(WITH_LEVEL_ZERO_BACKEND)
  endif()
  
  if(WITH_OPENCL_BACKEND)
@@ -58,7 +58,12 @@ index 9970a93..eae317d 100644
 -  
 -  FetchContent_MakeAvailable(ocl-headers)
 -  
--  add_library(ocl-headers INTERFACE)
++  set(ACPP_OPENCL_HEADERS_SOURCE_DIR "" CACHE PATH
++      "Existing OpenCL-Headers include directory to use instead of fetching it")
++  set(ACPP_OPENCL_CLHPP_SOURCE_DIR "" CACHE PATH
++      "Existing OpenCL-CLHPP source tree to use instead of fetching it")
++
+   add_library(ocl-headers INTERFACE)
 -  target_include_directories(ocl-headers INTERFACE ${ocl-headers_SOURCE_DIR})
 -  
 -  FetchContent_Declare(ocl-cxx-headers
@@ -67,17 +72,8 @@ index 9970a93..eae317d 100644
 -  )
 -  FetchContent_MakeAvailable(ocl-cxx-headers)
 -  
-+  set(ACPP_OPENCL_HEADERS_SOURCE_DIR "" CACHE PATH
-+      "Existing OpenCL-Headers source tree to use instead of fetching it")
-+  set(ACPP_OPENCL_CLHPP_SOURCE_DIR "" CACHE PATH
-+      "Existing OpenCL-CLHPP source tree to use instead of fetching it")
-+
-   add_library(ocl-cxx-headers INTERFACE)
--  target_include_directories(ocl-cxx-headers INTERFACE ${ocl-cxx-headers_SOURCE_DIR}/include)
-+  add_library(ocl-headers INTERFACE)
-+  if(ACPP_OPENCL_HEADERS_SOURCE_DIR AND ACPP_OPENCL_CLHPP_SOURCE_DIR)
++  if(ACPP_OPENCL_HEADERS_SOURCE_DIR)
 +    target_include_directories(ocl-headers INTERFACE ${ACPP_OPENCL_HEADERS_SOURCE_DIR})
-+    target_include_directories(ocl-cxx-headers INTERFACE ${ACPP_OPENCL_CLHPP_SOURCE_DIR}/include)
 +  else()
 +    include(FetchContent)
 +    FetchContent_Declare(ocl-headers
@@ -88,7 +84,14 @@ index 9970a93..eae317d 100644
 +    FetchContent_MakeAvailable(ocl-headers)
 +
 +    target_include_directories(ocl-headers INTERFACE ${ocl-headers_SOURCE_DIR})
++  endif()
 +
+   add_library(ocl-cxx-headers INTERFACE)
+-  target_include_directories(ocl-cxx-headers INTERFACE ${ocl-cxx-headers_SOURCE_DIR}/include)
++  if(ACPP_OPENCL_CLHPP_SOURCE_DIR)
++    target_include_directories(ocl-cxx-headers INTERFACE ${ACPP_OPENCL_CLHPP_SOURCE_DIR}/include)
++  else()
++    include(FetchContent)
 +    FetchContent_Declare(ocl-cxx-headers
 +      GIT_REPOSITORY https://github.com/KhronosGroup/OpenCL-CLHPP
 +      GIT_TAG 67d100e70612341707725b6648ccca4c10b0dc31

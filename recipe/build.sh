@@ -31,7 +31,7 @@ cmake_extra_args=()
 
 if [[ "${target_platform}" == linux* ]]; then
   cmake_extra_args+=("-DACPP_LLD_PATH=${PREFIX}/bin/ld.lld")
-  cmake_extra_args+=("-DACPP_OPENCL_HEADERS_SOURCE_DIR=${SRC_DIR}/opencl-headers")
+  cmake_extra_args+=("-DACPP_OPENCL_HEADERS_SOURCE_DIR=${PREFIX}/include")
   cmake_extra_args+=("-DACPP_OPENCL_CLHPP_SOURCE_DIR=${SRC_DIR}/opencl-clhpp")
   cmake_extra_args+=("-DACPP_LLVMSPIRV_SOURCE_DIR=${SRC_DIR}/acpp-spirv-llvm-translator")
   cmake_extra_args+=("-DACPP_SPIRV_HEADERS_SOURCE_DIR=${PREFIX}")
@@ -52,7 +52,7 @@ if [[ "${target_platform}" == linux* ]]; then
   fi
 
   test -f "${PREFIX}/include/spirv/unified1/spirv.hpp"
-  test -f "${SRC_DIR}/opencl-headers/CL/cl.h"
+  test -f "${PREFIX}/include/CL/cl.h"
   test -f "${SRC_DIR}/opencl-clhpp/include/CL/opencl.hpp"
   test -f "${SRC_DIR}/acpp-spirv-llvm-translator/CMakeLists.txt"
 fi
